@@ -39,8 +39,8 @@ config :phoenix, :stacktrace_depth, 20
 # Configure your database
 config :booker, Booker.Repo,
   adapter: Ecto.Adapters.Postgres,
-  username: "postgres",
-  password: "postgres",
-  database: "booker_dev",
+  username: "booker",
+  password: "booker",
+  database: "booker",
   hostname: "localhost",
   pool_size: 10
