@@ -48,6 +48,6 @@ defmodule BookerWeb.UserController do
   # TODO: handle errors
   defp login_reply({:ok, user}, conn) do
     {:ok, token, _} = Guardian.encode_and_sign(user)
-    render conn, "token.json", token: token
+    render conn, "token.json", token: token, user: user
   end
 end

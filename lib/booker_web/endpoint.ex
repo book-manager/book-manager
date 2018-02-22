@@ -36,6 +36,7 @@ defmodule BookerWeb.Endpoint do
     key: "_booker_key",
     signing_salt: "1+Omzq72"
 
+  plug CORSPlug, origin: ~r/.*/
   plug BookerWeb.Router
 
   @doc """

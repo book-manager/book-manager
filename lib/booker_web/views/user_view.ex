@@ -10,8 +10,8 @@ defmodule BookerWeb.UserView do
     %{data: render_one(user, UserView, "user.json")}
   end
 
-  def render("token.json", %{token: token}) do
-    %{token: token}
+  def render("token.json", %{token: token, user: user}) do
+    %{success: true, token: token, user: %{ name: user.name, surname: user.surname, avatar_url: user.avatar_url, is_admin: user.is_admin}}
   end
 
   def render("user.json", %{user: user}) do
