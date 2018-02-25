@@ -22,4 +22,9 @@ defmodule BookerWeb.Router do
     pipe_through [:api]
     post "/login", UserController, :login
   end
+
+  scope "/auth", BookerWeb do
+    pipe_through [:api]
+    post "/", UserController, :check_auth
+  end
 end

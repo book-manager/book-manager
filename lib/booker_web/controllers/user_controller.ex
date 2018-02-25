@@ -1,3 +1,4 @@
+require IEx
 defmodule BookerWeb.UserController do
   use BookerWeb, :controller
 
@@ -15,6 +16,15 @@ defmodule BookerWeb.UserController do
   def login(conn, %{"email" => email, "password" => password}) do
     Auth.authenticate_user(email, password)
       |> login_reply(conn)
+  end
+
+  def check_auth(conn, %{"token" => token}) do
+    case Guardian.resource_from_token(token) do
+      {:ok, %Booker.Auth.User{} = user, _} ->
+        render(conn, "token.json", token: token, user: user )
+      {:error, _} ->
+        conn |> halt
+    end
   end
 
   def create(conn, %{"user" => user_params}) do
