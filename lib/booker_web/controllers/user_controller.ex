@@ -1,4 +1,3 @@
-require IEx
 defmodule BookerWeb.UserController do
   use BookerWeb, :controller
 
@@ -18,6 +17,19 @@ defmodule BookerWeb.UserController do
       |> login_reply(conn)
   end
 
+  def register(conn, %{"email" => email, "first_name" => name, "last_name"=> surname, "password" => password, "cpassword" => re_password}) do
+     case password == re_password do
+      true -> 
+        with {:ok, %User{} = user} <- Auth.create_user(%{ "email" => email, "name" => name, "surname"=> surname, "password" => password }) do
+          conn
+            |> put_status(:created)
+            |> render("show.json", user: user)
+        end
+      false ->
+        conn |> halt
+     end 
+  end
+
   def check_auth(conn, %{"token" => token}) do
     case Guardian.resource_from_token(token) do
       {:ok, %Booker.Auth.User{} = user, _} ->
@@ -30,8 +42,8 @@ defmodule BookerWeb.UserController do
   def create(conn, %{"user" => user_params}) do
     with {:ok, %User{} = user} <- Auth.create_user(user_params) do
       conn
-      |> put_status(:created)
-      |> render("show.json", user: user)
+        |> put_status(:created)
+        |> render("show.json", user: user)
     end
   end
 

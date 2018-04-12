@@ -5,12 +5,12 @@ defmodule Booker.Auth.User do
   alias Comeonin.Bcrypt
 
   schema "users" do
-    field :avatar_url, :string
     field :email, :string
-    field :is_admin, :boolean, default: false
-    field :name, :string
     field :password, :string
+    field :name, :string
     field :surname, :string
+    field :avatar_url, :string, default: ""
+    field :is_admin, :boolean, default: false
 
     timestamps()
   end
@@ -18,9 +18,9 @@ defmodule Booker.Auth.User do
   @doc false
   def changeset(%User{} = user, attrs) do
     user
-    |> cast(attrs, [:email, :name, :surname, :avatar_url, :password, :is_admin])
-    |> validate_required([:email, :name, :surname, :avatar_url, :password, :is_admin])
-    |> put_pass_hash()
+      |> cast(attrs, [:email, :name, :surname, :avatar_url, :password, :is_admin])
+      |> validate_required([:email, :name, :surname, :password])
+      |> put_pass_hash()
   end
 
   @doc false

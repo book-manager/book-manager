@@ -7,7 +7,6 @@ defmodule Booker.Auth.ErrorHandler do
     |> send_resp(401, "Unathenticated, please login first")
   end
 
-
   def auth_error(conn, {type, _reason}, _opts) do
     body = to_string(type)
     conn

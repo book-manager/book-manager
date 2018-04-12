@@ -21,10 +21,17 @@ defmodule BookerWeb.Router do
   scope "/", BookerWeb do
     pipe_through [:api]
     post "/login", UserController, :login
+    post "/register", UserController, :register
   end
 
   scope "/auth", BookerWeb do
-    pipe_through [:api]
+    pipe_through :api
     post "/", UserController, :check_auth
+  end
+
+  scope "/users", BookerWeb do
+    pipe_through [:api, :admin]
+
+    get "/", UserController, :index
   end
 end
