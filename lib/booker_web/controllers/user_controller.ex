@@ -1,9 +1,11 @@
+require IEx
 defmodule BookerWeb.UserController do
   use BookerWeb, :controller
 
   alias Booker.Auth
   alias Booker.Auth.User
   alias Booker.Auth.Guardian
+  alias Booker.Repo
 
   action_fallback BookerWeb.FallbackController
 
@@ -17,9 +19,23 @@ defmodule BookerWeb.UserController do
       |> login_reply(conn)
   end
 
+  @doc """
+  Search for users based on provided query. It can be name or surname or name and surname. We replace spaces with | so full text search in Postgres.
+
+  Returns [User]
+  """
+  def search_user(conn, %{"query" => query}) do
+    formatted = query |> String.replace(" ", "|")
+    users = Repo.execute_and_load("SELECT * FROM users WHERE id IN (SELECT searchable_id FROM searches WHERE to_tsvector('english', term) @@ to_tsquery($1));", [ formatted ], User)
+    IEx.pry()
+    conn
+      |> put_status(:ok)
+      |> render("index.json", users: users)
+  end
+
   def register(conn, %{"email" => email, "first_name" => name, "last_name"=> surname, "password" => password, "cpassword" => re_password}) do
      case password == re_password do
-      true -> 
+      true ->
         with {:ok, %User{} = user} <- Auth.create_user(%{ "email" => email, "name" => name, "surname"=> surname, "password" => password }) do
           conn
             |> put_status(:created)
@@ -27,7 +43,7 @@ defmodule BookerWeb.UserController do
         end
       false ->
         conn |> halt
-     end 
+     end
   end
 
   def check_auth(conn, %{"token" => token}) do

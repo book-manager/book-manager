@@ -29,6 +29,11 @@ defmodule BookerWeb.Router do
     post "/", UserController, :check_auth
   end
 
+  scope "/friends", BookerWeb do
+    pipe_through [:api]
+    post "/search", UserController, :search_user
+  end
+
   scope "/users", BookerWeb do
     pipe_through [:api, :admin]
 
