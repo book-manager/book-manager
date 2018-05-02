@@ -27,7 +27,6 @@ defmodule BookerWeb.UserController do
   def search_user(conn, %{"query" => query}) do
     formatted = query |> String.replace(" ", "|")
     users = Repo.execute_and_load("SELECT * FROM users WHERE id IN (SELECT searchable_id FROM searches WHERE to_tsvector('english', term) @@ to_tsquery($1));", [ formatted ], User)
-    IEx.pry()
     conn
       |> put_status(:ok)
       |> render("index.json", users: users)

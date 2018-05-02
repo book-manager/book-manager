@@ -30,13 +30,14 @@ defmodule BookerWeb.Router do
   end
 
   scope "/friends", BookerWeb do
-    pipe_through [:api]
+    pipe_through [:api, :auth]
     post "/search", UserController, :search_user
   end
 
   scope "/users", BookerWeb do
-    pipe_through [:api, :admin]
+    pipe_through [:api]
 
     get "/", UserController, :index
+    get "/:id", UserController, :show
   end
 end
