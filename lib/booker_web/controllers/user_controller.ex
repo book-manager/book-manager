@@ -7,6 +7,8 @@ defmodule BookerWeb.UserController do
   alias Booker.Auth.Guardian
   alias Booker.Repo
 
+  import Ecto.Query
+
   action_fallback BookerWeb.FallbackController
 
   def index(conn, _params) do
@@ -30,6 +32,22 @@ defmodule BookerWeb.UserController do
     conn
       |> put_status(:ok)
       |> render("index.json", users: users)
+  end
+
+
+  @doc """
+  Fetch details about users with given ids.
+
+  Returns [User]
+  """
+  def fetch_users_detail(conn, params) do
+    ids = Poison.decode!(params["ids"])
+    query = from u in Booker.Auth.User,
+              where: u.id in ^ids,
+              select: u
+    response = query |> Repo.all
+
+    render(conn, "index.json", users: response)
   end
 
   def register(conn, %{"email" => email, "first_name" => name, "last_name"=> surname, "password" => password, "cpassword" => re_password}) do
