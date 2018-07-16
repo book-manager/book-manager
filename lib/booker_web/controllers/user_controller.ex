@@ -1,4 +1,3 @@
-require IEx
 defmodule BookerWeb.UserController do
   use BookerWeb, :controller
 
@@ -59,10 +58,12 @@ defmodule BookerWeb.UserController do
             |> render("show.json", user: user)
         end
       false ->
+        # TODO: Handle different types of error
         conn |> halt
      end
   end
 
+  # TODO: Handle errors
   def check_auth(conn, %{"token" => token}) do
     case Guardian.resource_from_token(token) do
       {:ok, %Booker.Auth.User{} = user, _} ->

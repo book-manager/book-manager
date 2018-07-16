@@ -5,13 +5,13 @@ defmodule Booker.Auth.AdminPlug do
 
   def call(conn, _opts) do
     current_user = conn.assigns.current_user
-
-    if current_user.is_admin do
-      conn
-    else
-      conn
-      |> put_status(:unathorized)
-      |> halt
+    case current_user.is_admin do
+      true ->
+        conn
+      false ->
+        conn
+          |> put_status(:unathorized)
+          |> halt
     end
   end
 end
