@@ -1,3 +1,4 @@
+require IEx
 defmodule BookerWeb.FallbackController do
   @moduledoc """
   Translates controller action results into valid `Plug.Conn` responses.
@@ -10,5 +11,11 @@ defmodule BookerWeb.FallbackController do
     conn
     |> put_status(:not_found)
     |> render(BookerWeb.ErrorView, :"404")
+  end
+
+  def call(conn, {:error, %Ecto.Changeset{} = changeset}) do
+    conn
+    |> put_status(:unprocessable_entity)
+    |> render(BookerWeb.ChangesetView, "error.json", changeset: changeset)
   end
 end
