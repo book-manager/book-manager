@@ -16,11 +16,14 @@ compile:
 prepare:
 	mix ecto.setup
 
-run-iex:
+iex:
 	iex -S mix phx.server
 
 run:
 	mix phx.server
 
 docker:
-	docker run -it --rm -e POSTGRES_USER=booker -e POSTGRES_PASWORD=booker -e POSTGRES_DATABASE=booker -p 5432:5432 -d postgres
+	docker run -it --rm -e POSTGRES_USER=booker -e POSTGRES_PASWORD=booker -e POSTGRES_DATABASE=booker -p 5432:5432 -d --name psql postgres
+
+docker-stop:
+	docker stop psql

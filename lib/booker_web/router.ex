@@ -11,7 +11,25 @@ defmodule BookerWeb.Router do
   end
 
   scope "/api", BookerWeb do
-    pipe_through :api
+    pipe_through [:api, :auth]
+
+    scope "/friends" do
+      post "/search", UserController, :search_user
+      get "/", FriendshipController, :index
+    end
+
+    scope "/users" do
+      get "/", UserController, :index
+      get "/:id", UserController, :show
+    end
+
+    scope "/friendship" do
+      post "/", FriendshipController, :create
+      post "/check-friendship", FriendshipController, :check_friendship
+      get "/pending", FriendshipController, :pending_requests
+      # get "/", UserController, :fetch_users_detail
+      # post "/search", UserController, :search_user
+    end
   end
 
   pipeline :admin do
@@ -27,18 +45,5 @@ defmodule BookerWeb.Router do
   scope "/auth", BookerWeb do
     pipe_through :api
     post "/", UserController, :check_auth
-  end
-
-  scope "/friends", BookerWeb do
-    pipe_through [:api, :auth]
-    get "/", UserController, :fetch_users_detail
-    post "/search", UserController, :search_user
-  end
-
-  scope "/users", BookerWeb do
-    pipe_through [:api]
-
-    get "/", UserController, :index
-    get "/:id", UserController, :show
   end
 end

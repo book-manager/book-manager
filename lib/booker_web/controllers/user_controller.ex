@@ -1,3 +1,4 @@
+require IEx
 defmodule BookerWeb.UserController do
   use BookerWeb, :controller
 
