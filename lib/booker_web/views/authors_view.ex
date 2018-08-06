@@ -15,6 +15,7 @@ defmodule BookerWeb.AuthorsView do
       name: authors.name,
       surname: authors.surname,
       birth_date: authors.birth_date,
-      description: authors.description}
+      description: authors.description,
+      avatar_url: authors.avatar_url}
   end
 end

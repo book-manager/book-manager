@@ -12,7 +12,14 @@ defmodule BookerWeb.AuthorsController do
   action_fallback BookerWeb.FallbackController
 
   def index(conn, _params) do
-    authors = Author.list_authors()
+    current_user_id = conn.assigns.current_user.id
+    query = from o in Ownership,
+            join: a in Authors,
+            on: o.id == a.id,
+            where: o.user_id == ^current_user_id,
+            select: a
+
+    authors = query |> Repo.all
     render(conn, "index.json", authors: authors)
   end
 

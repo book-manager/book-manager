@@ -13,6 +13,12 @@ defmodule BookerWeb.Router do
   scope "/api", BookerWeb do
     pipe_through [:api, :auth]
 
+    scope "/authors" do
+      post "/", AuthorsController, :create
+      get "/", AuthorsController, :index
+      get "/:id", AuthorsController, :show
+    end
+
     scope "/friends" do
       post "/search", UserController, :search_user
       get "/", FriendshipController, :index
