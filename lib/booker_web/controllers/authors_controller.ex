@@ -70,6 +70,37 @@ defmodule BookerWeb.AuthorsController do
     render(conn, "show.json", authors: authors)
   end
 
+  def search(conn, %{"query" => query}) do
+    formatted = query |> String.replace(" ", "|")
+    authors = Repo.execute_and_load("SELECT * FROM authors WHERE id IN (SELECT searchable_id FROM author_search WHERE to_tsvector('english', select_term) @@ to_tsquery($1));", [ formatted ], Authors)
+
+    conn
+      |> put_status(:ok)
+      |> render("index.json", authors: authors)
+  end
+
+  def owned(conn, %{"id" => id}) do
+    current_user_id = conn.assigns.current_user.id
+    author = Repo.get_by(Ownership, author_id: id, user_id: current_user_id)
+
+    case author do
+      %Ownership{} ->
+        conn |> put_status(:ok) |> render("owned.json", owned: true)
+      nil ->
+        conn |> put_status(:ok) |> render("owned.json", owned: false)
+    end
+  end
+
+  def create_ownership(conn, %{"author_id" => author_id}) do
+    current_user_id = conn.assigns.current_user.id
+
+    with {:ok, %Ownership{} = ownership} <- Author.create_ownership(%{user_id: current_user_id, author_id: author_id}) do
+      conn
+      |> put_status(:created)
+      |> render("owned.json", owned: true)
+    end
+  end
+
   def update(conn, %{"id" => id, "authors" => authors_params}) do
     authors = Author.get_authors!(id)
 

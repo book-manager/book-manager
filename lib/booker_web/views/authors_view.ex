@@ -10,6 +10,10 @@ defmodule BookerWeb.AuthorsView do
     %{data: render_one(authors, AuthorsView, "authors.json")}
   end
 
+  def render("owned.json", %{owned: owned}) do
+    %{owned: owned}
+  end
+
   def render("authors.json", %{authors: authors}) do
     %{id: authors.id,
       name: authors.name,

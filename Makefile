@@ -27,3 +27,6 @@ docker:
 
 docker-stop:
 	docker stop psql
+
+credo:
+	mix credo --strict
