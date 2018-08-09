@@ -1,0 +1,59 @@
+require Logger
+defmodule BookerWeb.BookController do
+  use BookerWeb, :controller
+
+  alias Booker.Books
+  alias Booker.Books.Book
+  alias Booker.Books.BookOwnership
+
+  alias Booker.Repo
+
+  action_fallback BookerWeb.FallbackController
+
+  def index(conn, _params) do
+    books = Books.list_books()
+    render(conn, "index.json", books: books)
+  end
+
+  def create(conn, %{"book" => book_params}) do
+    current_user_id = conn.assigns.current_user.id
+    isbn = book_params["isbn"]
+
+    # check if we alrady have that book
+    book = Repo.get_by(Book, isbn: isbn)
+
+    case book do
+      %Book{} ->
+        Logger.debug("We already have book #{isbn} in db")
+        with {:ok, %BookOwnership{} = book_ownership} <- Books.create_book_ownership(%{user_id: current_user_id, book_id: book.id}) do
+          conn |> put_status(:created) |> render("show.json", book: book)
+        end
+      nil ->
+        with {:ok, %Book{} = book} <- Books.create_book(book_params) do
+          with {:ok, %BookOwnership{} = book_ownership} <- Books.create_book_ownership(%{user_id: current_user_id, book_id: book.id}) do
+            conn |> put_status(:created) |> render("show.json", book: book)
+          end
+        end
+    end
+  end
+
+  def show(conn, %{"id" => id}) do
+    book = Books.get_book!(id)
+    render(conn, "show.json", book: book)
+  end
+
+  def update(conn, %{"id" => id, "book" => book_params}) do
+    book = Books.get_book!(id)
+
+    with {:ok, %Book{} = book} <- Books.update_book(book, book_params) do
+      render(conn, "show.json", book: book)
+    end
+  end
+
+  def delete(conn, %{"id" => id}) do
+    book = Books.get_book!(id)
+    with {:ok, %Book{}} <- Books.delete_book(book) do
+      send_resp(conn, :no_content, "")
+    end
+  end
+end

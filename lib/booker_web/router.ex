@@ -22,6 +22,10 @@ defmodule BookerWeb.Router do
       post "/ownership", AuthorsController, :create_ownership
     end
 
+    scope "/books" do
+      post "/", BookController, :create
+    end
+
     scope "/friends" do
       post "/search", UserController, :search_user
       get "/", FriendshipController, :index
