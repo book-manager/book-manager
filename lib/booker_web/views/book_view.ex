@@ -7,13 +7,19 @@ defmodule BookerWeb.BookView do
   end
 
   def render("show.json", %{book: book}) do
-    %{data: render_one(book, BookView, "book.json")}
+    %{data: book}
+  end
+
+  def render("owned.json", %{owned: owned}) do
+    %{owned: owned}
   end
 
   def render("book.json", %{book: book}) do
     %{id: book.id,
       title: book.title,
       isbn: book.isbn,
-      description: book.description}
+      description: book.description,
+      cover_url: book.cover_url,
+      thumbnail_url: book.thumbnail_url}
   end
 end

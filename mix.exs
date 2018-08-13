@@ -44,7 +44,9 @@ defmodule Booker.Mixfile do
       {:bcrypt_elixir, "~> 1.0"},
       {:cors_plug, "~> 1.5"},
       {:distillery, "~> 1.5", runtime: false},
-      {:credo, "~> 0.10.0", only: [:dev, :test], runtime: false}
+      {:credo, "~> 0.10.0", only: [:dev, :test], runtime: false},
+      {:httpoison, "~> 1.1"},
+      {:poison, "~> 3.1"}
     ]
   end
 

@@ -8,6 +8,7 @@ defmodule Booker.Books.Book do
     field :isbn, :string
     field :title, :string
     field :cover_url, :string
+    field :thumbnail_url, :string
     field :author_id, :id
 
     timestamps()
@@ -16,7 +17,7 @@ defmodule Booker.Books.Book do
   @doc false
   def changeset(book, attrs) do
     book
-    |> cast(attrs, [:title, :isbn, :description, :author_id, :cover_url])
+    |> cast(attrs, [:title, :isbn, :description, :author_id, :cover_url, :thumbnail_url])
     |> validate_required([:title, :isbn, :description, :author_id])
   end
 end
