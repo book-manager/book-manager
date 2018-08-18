@@ -60,6 +60,7 @@ Enum.each(0..20, fn number ->
   })
 end)
 
+# 1
 Booker.Author.create_authors(%{
   name: "Sławomir",
   surname: "Nieściur",
@@ -68,6 +69,7 @@ Booker.Author.create_authors(%{
     "Rocznik 1973. Z wykształcenia prawnik. Literaturą zafascynowany mniej więcej od siódmego roku życia, kiedy to po heroicznych bojach przedarł się przez znaleziony na strychu, doszczętnie sczytany i lekko nadgryziony przez myszy egzemplarz „Krzyżaków”. Pierwsze opowiadanie wystukał na tablecie za pomocą dotykowej klawiatury w spartańskich warunkach wsi polskiej bez dostępu do technologicznych udogodnień."
 })
 
+# 2
 Booker.Author.create_authors(%{
   name: "Bartek",
   surname: "Biedrzycki",
@@ -76,6 +78,7 @@ Booker.Author.create_authors(%{
     "Rocznik ’78, mąż Ali, ojciec Zuzy i Bruna, zamieszkuje w aglomeracji warszawskiej. Przez ponad dekadę pracował przy produkcji telewizyjnej, obecnie jest specjalistą IT. Ma niepotrzebny dyplom UW, uprawniający go do pracy w charakterze nauczyciela j. angielskiego. Starszy kapral rezerwy, po wzorowej służbie w Dywizjonie Artylerii Samobieżnej w Orzyszu. W armii zdarł dwie pary butów, za to wyniósł stamtąd honorowe krwiodawstwo."
 })
 
+# 3
 Booker.Author.create_authors(%{
   name: "Dominika",
   surname: "Węcławek",
@@ -127,6 +130,34 @@ Booker.Books.create_book(%{
   description:
     "I znowu odliczamy 2586 kroków... Tylko tyle. I aż tyle. Opowiadanie po opowiadaniu. To już V wydanie antologii, w nowej okładce, bez Wędrowycza, za to ze znakiem firmowym Pilipiuka w postaci niepowtarzalnego humoru i zdumiewających pomysłów. Czternaście historii, z których wieje grozą i mrocznym nastrojem. Odliczmy więc 2586 kroków... I krok: To jedna z najlepszych polskich antologii. Bardzo dobrze, lekko napisana, pełna świetnych pomysłów, ciekawa i świeża. Obowiązkowa rzecz na każdej półce. (Tomasz Kleta, Avatarae) II krok: 14 opowiadań zebranych w 1 książce to 13 różnych bohaterów, 14 niesamowitych historii, 14świetnych pomysłów i kilka godzin ciekawej lektury. (Piotr 'Szarik' Iwanicki, Playback) III krok: Najlepsze ze zbioru - tytułowe 2586 kroków i Wieczorne dzwony — to najdojrzalsze i najlepiej dopracowane opowiadania grozy, urzekające mrocznym nastrojem, bazującym na lęku przed chorobą, godne porównań do klimatów twórczości E. A. Poe. (Małgorzata Koczańska, Fahrenheit) Dalej liczcie już sami..."
 })
+
+Booker.Books.create_book(%{
+  title: "Ostatniego zeżra psy",
+  author_id: 1,
+  cover_url:
+    "https://s3.eu-central-1.amazonaws.com/booker-cover/book/cover/b80f5ef8-186e-08bd-6f05-45f0fe4042a2.jpg",
+  thumbnail_url:
+    "https://s3.eu-central-1.amazonaws.com/booker-cover/book/resized/b80f5ef8-186e-08bd-6f05-45f0fe4042a2.jpg",
+  isbn: "9788379642533",
+  description: "Myślisz, że widziałeś już wszystko, ale Zona potrafi zaskoczyć… \n Elektronika wysiada, nad Strefą wisi łuna niewiadomego pochodzenia, pojawiający się znikąd ogień trawi sprzęt, który – wydawałoby się – przetrwa najgorsze. \nCoś się porobiło… ze wszystkim. \n Badania nad mutacjami, a co za tym idzie dziesiątki sterowanych emisji, wymykają się spod kontroli. \n Myśliwi mają szansę odkryć prawdę, ale jak mówił Lenin: Abstrakcyjnej prawdy nie ma, prawda jest zawsze konkretna."
+})
+
+Booker.Books.create_book(%{
+  title: "Według zasług",
+  author_id: 1,
+  cover_url:
+    "https://s3.eu-central-1.amazonaws.com/booker-cover/book/cover/d420b7eb-2cb3-2b95-1cd6-c231f6b1d387.jpg",
+  thumbnail_url:
+    "https://s3.eu-central-1.amazonaws.com/booker-cover/book/resized/d420b7eb-2cb3-2b95-1cd6-c231f6b1d387.jpg",
+  isbn: "9788379641857",
+  description:
+    "Wiosną 2006 roku Czarnobylska Strefa Wykluczenia przypomina rezerwat dzikiej przyrody. W istocie jednak jest ogromnym poligonem badawczym. \n Kiedy dochodzi do katastrofy, tereny wokół elektrowni przekształcają się w najeżone anomaliami piekło – Zonę. To w niej znajdują schronienie przypuszczalni jej sprawcy, zaś dekadę później rozpoczyna się ostatnia runda śmiertelnej rozgrywki. Starcia, w którym drapieżnik staje się zwierzyną, a zwierzyna – drapieżnikiem. \n Brawurowo opowiedziana, eksploatująca nowe wątki historia z uniwersum S.T.A.L.K.E.R. –a."
+})
+
+Booker.Books.create_book_ownership(%{book_id: 1, user_id: 1})
+Booker.Books.create_book_ownership(%{book_id: 3, user_id: 1})
+Booker.Books.create_book_ownership(%{book_id: 2, user_id: 2})
+Booker.Books.create_book_ownership(%{book_id: 1, user_id: 2})
 
 Booker.Author.create_ownership(%{user_id: 1, author_id: 1})
 Booker.Author.create_ownership(%{user_id: 1, author_id: 2})

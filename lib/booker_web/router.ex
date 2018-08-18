@@ -20,6 +20,7 @@ defmodule BookerWeb.Router do
       get "/search/:query", AuthorsController, :search
       get "/owned/:id", AuthorsController, :owned
       post "/ownership", AuthorsController, :create_ownership
+      get "/books/:id", AuthorsController, :books
     end
 
     scope "/books" do

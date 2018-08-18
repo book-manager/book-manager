@@ -5,6 +5,7 @@ defmodule BookerWeb.AuthorsController do
 
   alias Booker.Author
   alias Booker.Author.{Authors, Ownership}
+  alias Booker.Books.{Book, BookOwnership}
 
   alias Booker.Repo
 
@@ -116,6 +117,40 @@ defmodule BookerWeb.AuthorsController do
       |> put_status(:created)
       |> render("owned.json", owned: true)
     end
+  end
+
+  @doc """
+  Returns books that are authored by given author id
+
+  Return [Book]
+  """
+  @spec books(Plug.Conn.t(), map()) :: Plug.Conn.t()
+  def books(conn, %{"id" => author_id}) do
+    current_user_id = conn.assigns.current_user.id
+
+    query = from b in Book,
+            where: b.author_id == ^author_id,
+            select: b
+    books = query |> Repo.all()
+    books_owned_query = from b in BookOwnership,
+        join: book in Book,
+        on: book.id == b.book_id,
+        where: b.user_id == ^current_user_id and book.author_id == ^author_id,
+        select: book
+
+    owned_books = books_owned_query |> Repo.all()
+
+    # TODO: Make sure we don't have empty value as first element
+    b = Enum.reduce books, %{}, fn x, acc ->
+      if Enum.member?(owned_books, x) do
+        # [acc | [Map.put(x, :owned, true)]]
+        Map.put(acc, x, Map.put(x, :owned, true))
+      else
+        Map.put(acc, x, Map.put(x, :owned, false))
+        # [acc | [x]]
+      end
+    end
+    conn |> put_status(200) |> render(BookerWeb.BookView, "index_owned.json", books: b |> Map.values())
   end
 
   def update(conn, %{"id" => id, "authors" => authors_params}) do
