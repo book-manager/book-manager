@@ -1,10 +1,10 @@
-require IEx
+require Logger
 defmodule BookerWeb.UserController do
   use BookerWeb, :controller
 
   alias Booker.Auth
-  alias Booker.Auth.User
   alias Booker.Auth.Guardian
+  alias Booker.Auth.User
   alias Booker.Repo
 
   import Ecto.Query
@@ -19,6 +19,16 @@ defmodule BookerWeb.UserController do
   def login(conn, %{"email" => email, "password" => password}) do
     Auth.authenticate_user(email, password)
       |> login_reply(conn)
+  end
+
+  @doc """
+  Creates encoded token with current user, without any custom claims, token_type is access and TTL is 1 day.
+
+  Returns %{token: created_token, user: current_user}
+  """
+  defp login_reply({:ok, user}, conn) do
+    {:ok, token, _} = Guardian.encode_and_sign(user, %{}, token_type: "access", ttl: {1, :days})
+    render conn, "token.json", token: token, user: user
   end
 
   @doc """
@@ -65,11 +75,12 @@ defmodule BookerWeb.UserController do
   end
 
   # TODO: Handle errors
+  @spec check_auth(Plug.Conn.t(), map()) :: Plug.Conn.t()
   def check_auth(conn, %{"token" => token}) do
     case Guardian.resource_from_token(token) do
       {:ok, %Booker.Auth.User{} = user, _} ->
         render(conn, "token.json", token: token, user: user )
-      {:error, _} ->
+      {:error, _, _} ->
         conn |> halt
     end
   end
@@ -100,11 +111,5 @@ defmodule BookerWeb.UserController do
     with {:ok, %User{}} <- Auth.delete_user(user) do
       send_resp(conn, :no_content, "")
     end
-  end
-
-  # TODO: handle errors
-  defp login_reply({:ok, user}, conn) do
-    {:ok, token, _} = Guardian.encode_and_sign(user)
-    render conn, "token.json", token: token, user: user
   end
 end

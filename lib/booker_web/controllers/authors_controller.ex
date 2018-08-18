@@ -1,16 +1,20 @@
-require IEx
 require Logger
 defmodule BookerWeb.AuthorsController do
   use BookerWeb, :controller
   import Ecto.Query
 
-  alias Booker.Repo
   alias Booker.Author
-  alias Booker.Author.Authors
-  alias Booker.Author.Ownership
+  alias Booker.Author.{Authors, Ownership}
+
+  alias Booker.Repo
 
   action_fallback BookerWeb.FallbackController
 
+  @doc """
+  List authors owned by current user
+
+  Returns [Author]
+  """
   def index(conn, _params) do
     current_user_id = conn.assigns.current_user.id
     query = from o in Ownership,
@@ -23,6 +27,13 @@ defmodule BookerWeb.AuthorsController do
     render(conn, "index.json", authors: authors)
   end
 
+  @doc """
+  Creates Author and Ownership.
+  If Author is already present in database, we just create ownership relation between Author and User.
+  If the given author is new, we create new row im authors table and relation in ownership table.
+
+  Returns [Author]
+  """
   def create(conn, %{"author" => authors_params}) do
     current_user_id = conn.assigns.current_user.id
     name = authors_params["name"]
@@ -45,7 +56,7 @@ defmodule BookerWeb.AuthorsController do
             |> render("index.json", authors: authors)
           end
         end
-      [%Authors{name: name, id: id}] ->
+      [%Authors{id: id}] ->
         Logger.debug("We already have that author in DB, create ownership relation")
         ownership = Repo.get_by(Ownership, author_id: id, user_id: current_user_id)
         case ownership do
@@ -65,6 +76,11 @@ defmodule BookerWeb.AuthorsController do
     end
   end
 
+  @doc """
+  Get data about one author by id
+
+  Returns Author
+  """
   def show(conn, %{"id" => id}) do
     authors = Author.get_authors!(id)
     render(conn, "show.json", authors: authors)
@@ -72,6 +88,7 @@ defmodule BookerWeb.AuthorsController do
 
   def search(conn, %{"query" => query}) do
     formatted = query |> String.replace(" ", "|")
+    # TODO: Move this to Author module
     authors = Repo.execute_and_load("SELECT * FROM authors WHERE id IN (SELECT searchable_id FROM author_search WHERE to_tsvector('english', select_term) @@ to_tsquery($1));", [ formatted ], Authors)
 
     conn
