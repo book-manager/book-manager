@@ -3,8 +3,10 @@ defmodule BookerWeb.UserController do
   use BookerWeb, :controller
 
   alias Booker.Auth
+  alias Booker.Auth.Friendship
   alias Booker.Auth.Guardian
   alias Booker.Auth.User
+  alias Booker.Books.BookOwnership
   alias Booker.Repo
 
   import Ecto.Query
@@ -60,6 +62,7 @@ defmodule BookerWeb.UserController do
     render(conn, "index.json", users: response)
   end
 
+  @spec register(any(), map()) :: any()
   def register(conn, %{"email" => email, "first_name" => name, "last_name"=> surname, "password" => password, "cpassword" => re_password}) do
      case password == re_password do
       true ->
@@ -91,6 +94,27 @@ defmodule BookerWeb.UserController do
         |> put_status(:created)
         |> render("show.json", user: user)
     end
+  end
+
+    @doc """
+  Return friends that own given book
+
+  Returns [Friends]
+  """
+  def show_friends_book(conn, %{"id" => book_id}) do
+    query =
+      from(o in BookOwnership,
+        join: u in User,
+        on: u.id == o.user_id,
+        join: f in Friendship,
+        on: f.friend_b_id == u.id,
+        where: o.book_id == ^book_id,
+        select: u
+      )
+
+    friends = query |> Repo.all()
+    Logger.info("Users that have given book and are my friends: #{inspect friends}")
+    conn |> render("index.json", users: friends)
   end
 
   def show(conn, %{"id" => id}) do

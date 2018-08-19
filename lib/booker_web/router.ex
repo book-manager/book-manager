@@ -27,11 +27,18 @@ defmodule BookerWeb.Router do
       post "/", BookController, :create
       get "/:id", BookController, :show
       get "/owned/:id", BookController, :owned
+      post "/ownership", BookController, :create_ownership
+      # get "/rating/:id", BookController, :show_rating
+    end
+
+    scope "/books_ownership" do
+      post "/read", BookOwnershipController, :update
     end
 
     scope "/friends" do
       post "/search", UserController, :search_user
       get "/", FriendshipController, :index
+      get "/book/:id", UserController, :show_friends_book
     end
 
     scope "/users" do
