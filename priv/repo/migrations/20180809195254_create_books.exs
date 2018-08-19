@@ -8,6 +8,7 @@ defmodule Booker.Repo.Migrations.CreateBooks do
       add :description, :text, null: false
       add :cover_url, :string
       add :thumbnail_url, :string
+      add :rating, :integer
       add :author_id, references(:authors, on_delete: :nothing)
 
       timestamps()
