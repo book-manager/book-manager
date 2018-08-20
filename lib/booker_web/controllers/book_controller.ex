@@ -13,8 +13,17 @@ defmodule BookerWeb.BookController do
 
   action_fallback(BookerWeb.FallbackController)
 
+  @doc """
+  Return books owned by current user
+  """
   def index(conn, _params) do
-    books = Books.list_books()
+    current_user_id = conn.assigns.current_user.id
+    query = from o in BookOwnership,
+            join: b in Book,
+            on: b.id == o.book_id,
+            where: o.user_id == ^current_user_id,
+            select: b
+    books = query |> Repo.all
     render(conn, "index.json", books: books)
   end
 

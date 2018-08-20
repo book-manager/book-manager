@@ -25,6 +25,7 @@ defmodule BookerWeb.Router do
 
     scope "/books" do
       post "/", BookController, :create
+      get "/", BookController, :index
       get "/:id", BookController, :show
       get "/owned/:id", BookController, :owned
       post "/ownership", BookController, :create_ownership
