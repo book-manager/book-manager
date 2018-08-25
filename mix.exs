@@ -5,7 +5,7 @@ defmodule Booker.Mixfile do
     [
       app: :booker,
       version: "0.0.1",
-      elixir: "~> 1.6",
+      elixir: "~> 1.7",
       elixirc_paths: elixirc_paths(Mix.env),
       compilers: [:phoenix, :gettext] ++ Mix.compilers,
       start_permanent: Mix.env == :prod,
@@ -46,7 +46,8 @@ defmodule Booker.Mixfile do
       {:distillery, "~> 1.5", runtime: false},
       {:credo, "~> 0.10.0", only: [:dev, :test], runtime: false},
       {:httpoison, "~> 1.1"},
-      {:poison, "~> 3.1"}
+      {:poison, "~> 3.1"},
+      {:ja_serializer, "~> 0.13.0"}
     ]
   end
 
@@ -60,7 +61,7 @@ defmodule Booker.Mixfile do
     [
       "ecto.setup": ["ecto.create", "ecto.migrate", "run priv/repo/seeds.exs"],
       "ecto.reset": ["ecto.drop", "ecto.setup"],
-      "test": ["ecto.create --quiet", "ecto.migrate", "test"]
+      test: ["ecto.create --quiet", "ecto.migrate", "test"]
     ]
   end
 end

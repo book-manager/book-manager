@@ -5,9 +5,10 @@ defmodule Booker.Books.Book do
   Most important think is ISBN number, it should be unique in the whole system.
   """
 
-  use Ecto.Schema
   import Ecto.Changeset
+  use Ecto.Schema
 
+  alias Booker.Authors.Author
 
   schema "books" do
     field :description, :string
@@ -15,16 +16,23 @@ defmodule Booker.Books.Book do
     field :title, :string
     field :cover_url, :string
     field :thumbnail_url, :string
-    field :author_id, :id
     field :rating, :integer
 
     timestamps()
+
+    belongs_to :author, Author
   end
+
+  @required_fields [
+    :title,
+    :isbn,
+    :description
+  ]
 
   @doc false
   def changeset(book, attrs) do
     book
-    |> cast(attrs, [:title, :isbn, :description, :author_id, :cover_url, :thumbnail_url, :rating])
-    |> validate_required([:title, :isbn, :description, :author_id])
+    |> cast(attrs, [:title, :isbn, :description, :cover_url, :thumbnail_url, :rating])
+    |> validate_required(@required_fields)
   end
 end

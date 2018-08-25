@@ -14,13 +14,12 @@ defmodule BookerWeb.Router do
     pipe_through [:api, :auth]
 
     scope "/authors" do
-      post "/", AuthorsController, :create
-      get "/", AuthorsController, :index
-      get "/:id", AuthorsController, :show
-      get "/search/:query", AuthorsController, :search
-      get "/owned/:id", AuthorsController, :owned
-      post "/ownership", AuthorsController, :create_ownership
-      get "/books/:id", AuthorsController, :books
+      post "/", AuthorController, :create
+      get "/", AuthorController, :index
+      get "/:id", AuthorController, :show
+      get "/search/:query", AuthorController, :search
+      get "/owned/:id", AuthorController, :owned
+      get "/books/:id", AuthorController, :books
     end
 
     scope "/books" do
@@ -30,6 +29,11 @@ defmodule BookerWeb.Router do
       get "/owned/:id", BookController, :owned
       post "/ownership", BookController, :create_ownership
       # get "/rating/:id", BookController, :show_rating
+    end
+
+    scope "/ownership" do
+      get "/:id", OwnershipController, :show
+      post "/", OwnershipController, :create
     end
 
     scope "/books_ownership" do

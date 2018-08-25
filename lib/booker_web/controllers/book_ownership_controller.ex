@@ -3,7 +3,7 @@ defmodule BookerWeb.BookOwnershipController do
   use BookerWeb, :controller
 
   alias Booker.Books
-  alias Booker.Books.BookOwnership
+  alias Booker.Books.{BookOwnership, Book}
 
   alias Booker.Repo
 

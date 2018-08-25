@@ -13,11 +13,13 @@ defmodule BookerWeb.UserController do
 
   action_fallback BookerWeb.FallbackController
 
+  @spec index(Plug.Conn.t(), any()) :: Plug.Conn.t()
   def index(conn, _params) do
     users = Auth.list_users()
     render(conn, "index.json", users: users)
   end
 
+  @spec login(Plug.Conn.t(), map()) :: Plug.Conn.t()
   def login(conn, %{"email" => email, "password" => password}) do
     Auth.authenticate_user(email, password)
       |> login_reply(conn)
@@ -88,6 +90,7 @@ defmodule BookerWeb.UserController do
     end
   end
 
+  @spec create(any(), map()) :: any()
   def create(conn, %{"user" => user_params}) do
     with {:ok, %User{} = user} <- Auth.create_user(user_params) do
       conn
@@ -117,11 +120,13 @@ defmodule BookerWeb.UserController do
     conn |> render("index.json", users: friends)
   end
 
+  @spec show(Plug.Conn.t(), map()) :: Plug.Conn.t()
   def show(conn, %{"id" => id}) do
     user = Auth.get_user!(id)
     render(conn, "show.json", user: user)
   end
 
+  @spec update(any(), map()) :: any()
   def update(conn, %{"id" => id, "user" => user_params}) do
     user = Auth.get_user!(id)
 
@@ -130,6 +135,7 @@ defmodule BookerWeb.UserController do
     end
   end
 
+  @spec delete(any(), map()) :: any()
   def delete(conn, %{"id" => id}) do
     user = Auth.get_user!(id)
     with {:ok, %User{}} <- Auth.delete_user(user) do

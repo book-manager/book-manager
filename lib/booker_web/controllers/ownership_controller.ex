@@ -4,6 +4,9 @@ defmodule BookerWeb.OwnershipController do
   alias Booker.Authors
   alias Booker.Authors.Ownership
 
+  alias Booker.Repo
+  alias Ecto.Changeset
+
   action_fallback BookerWeb.FallbackController
 
   def index(conn, _params) do
@@ -11,17 +14,34 @@ defmodule BookerWeb.OwnershipController do
     render(conn, "index.json", ownership: ownership)
   end
 
-  def create(conn, %{"ownership" => ownership_params}) do
-    with {:ok, %Ownership{} = ownership} <- Authors.create_ownership(ownership_params) do
-      conn
-      |> put_status(:created)
-      |> render("show.json", ownership: ownership)
-    end
+  def create(conn, %{"author_id" => author_id}) do
+    current_user = Repo.preload(conn.assigns.current_user, :authors)
+    authors = [Authors.get_author!(author_id)] ++ current_user.authors
+
+    current_user
+      |> Repo.preload(:authors)
+      |> Changeset.change()
+      |> Changeset.put_assoc(:authors, authors)
+      |> Repo.update!
+
+    render conn, "show.json-api", data: %{owned: true}
   end
 
+  @doc """
+  Check if current user owns given author
+
+  REMEBER: ID means author ID not ownership ID
+  """
   def show(conn, %{"id" => id}) do
-    ownership = Authors.get_ownership!(id)
-    render(conn, "show.json", ownership: ownership)
+    current_user_id = conn.assigns.current_user.id
+    ownership = Repo.get_by(Ownership, author_id: id, user_id: current_user_id)
+
+    case ownership do
+      %Ownership{} ->
+        render conn, "show.json-api", data: %{owned: true}
+      nil ->
+        render conn, "show.json-api", data: %{owned: false}
+    end
   end
 
   def update(conn, %{"id" => id, "ownership" => ownership_params}) do

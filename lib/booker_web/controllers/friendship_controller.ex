@@ -4,9 +4,7 @@ defmodule BookerWeb.FriendshipController do
   use BookerWeb, :controller
 
   alias Booker.Auth
-  alias Booker.Auth.Friendship
-  alias Booker.Auth.User
-  alias Booker.Books.BookOwnership
+  alias Booker.Auth.{Friendship, User}
   alias Booker.Repo
 
   import Ecto.Query
@@ -18,7 +16,7 @@ defmodule BookerWeb.FriendshipController do
     # check if friend request exists
 
     query =
-      from(f in Booker.Auth.Friendship,
+      from(f in Friendship,
         where: f.friend_b_id == ^current_user.id and f.friend_a_id == ^friend_id,
         select: f
       )
@@ -53,7 +51,7 @@ defmodule BookerWeb.FriendshipController do
 
     # Check if we send request to that user
     outgoing_query =
-      from(u in Booker.Auth.Friendship,
+      from(u in Friendship,
         where: u.friend_a_id == ^current_user_id and u.friend_b_id == ^friend_id,
         select: u
       )
@@ -62,7 +60,7 @@ defmodule BookerWeb.FriendshipController do
 
     # Check if user send us requests
     incoming_query =
-      from(u in Booker.Auth.Friendship,
+      from(u in Friendship,
         where: u.friend_b_id == ^current_user_id and u.friend_a_id == ^friend_id,
         select: u
       )
@@ -116,8 +114,8 @@ defmodule BookerWeb.FriendshipController do
     current_user = conn.assigns.current_user
 
     query =
-      from(u in Booker.Auth.User,
-        join: f in Booker.Auth.Friendship,
+      from(u in User,
+        join: f in Friendship,
         on: f.friend_a_id == u.id,
         select: u
       )
@@ -131,8 +129,8 @@ defmodule BookerWeb.FriendshipController do
     current_user_id = conn.assigns.current_user.id
 
     query =
-      from(u in Booker.Auth.User,
-        join: f in Booker.Auth.Friendship,
+      from(u in User,
+        join: f in Friendship,
         on: f.friend_a_id == u.id,
         where: f.friend_b_id == ^current_user_id and f.pending == true,
         select: u

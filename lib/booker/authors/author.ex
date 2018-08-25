@@ -1,7 +1,10 @@
 defmodule Booker.Authors.Author do
-  use Ecto.Schema
   import Ecto.Changeset
+  use Ecto.Schema
 
+  alias Booker.Auth.User
+  alias Booker.Books.Book
+  alias Booker.Authors.Ownership
 
   schema "authors" do
     field :birth_date, :naive_datetime
@@ -11,6 +14,9 @@ defmodule Booker.Authors.Author do
     field :avatar_url, :string
 
     timestamps()
+
+    has_many :books, Book, on_delete: :delete_all
+    many_to_many :users, User, join_through: Ownership
   end
 
   @doc false
@@ -18,5 +24,6 @@ defmodule Booker.Authors.Author do
     authors
     |> cast(attrs, [:name, :surname, :description, :avatar_url])
     |> validate_required([:name, :surname, :description])
+    |> cast_assoc(:users)
   end
 end

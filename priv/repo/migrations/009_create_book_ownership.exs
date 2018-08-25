@@ -6,9 +6,9 @@ defmodule Booker.Repo.Migrations.CreateBookOwnership do
 
   def change do
     create table(:book_ownership) do
-      add :book_id, references(:books, on_delete: :nothing)
-      add :user_id, references(:users, on_delete: :nothing)
-      add :read, :boolean
+      add :book_id, references(:books, on_delete: :nothing), null: false
+      add :user_id, references(:users, on_delete: :nothing), null: false
+      add :read, :boolean, default: false, null: false
       add :rating, :integer
 
       timestamps()

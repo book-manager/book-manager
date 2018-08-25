@@ -3,8 +3,7 @@ defmodule BookerWeb.BookController do
   use BookerWeb, :controller
 
   alias Booker.Books
-  alias Booker.Books.Book
-  alias Booker.Books.BookOwnership
+  alias Booker.Books.{Book, BookOwnership}
   alias Booker.Repo
 
   alias Booker.Repo
@@ -23,8 +22,17 @@ defmodule BookerWeb.BookController do
             on: b.id == o.book_id,
             where: o.user_id == ^current_user_id,
             select: b
-    books = query |> Repo.all
-    render(conn, "index.json", books: books)
+
+    books = query |> Repo.all |> Repo.preload([:author])
+    render conn, "index.json-api", data: books, opts: [include: "author"]
+  end
+
+  @doc """
+  Return books owned by friends
+  """
+  def index_friends(conn, _params) do
+    current_user_id = conn.assigns.current_user.id
+
   end
 
   def create(conn, %{"book" => book_params}) do
@@ -71,25 +79,9 @@ defmodule BookerWeb.BookController do
   end
 
   def show(conn, %{"id" => id}) do
-    query =
-      from(b in Booker.Books.Book,
-        join: a in Booker.Author.Authors,
-        on: a.id == b.author_id,
-        where: b.id == ^id,
-        select: %{
-          id: b.id,
-          title: b.title,
-          cover_url: b.cover_url,
-          thumbnail: b.thumbnail_url,
-          author_id: a.id,
-          author_name: a.name,
-          author_surname: a.surname,
-          description: b.description
-        }
-      )
+    book = Books.get_book!(id) |> Repo.preload([:author])
 
-    response = query |> Repo.one()
-    render(conn, "show.json", book: response)
+    render conn, "show.json-api", data: book, opts: [include: "author"]
   end
 
   @doc """
@@ -102,10 +94,12 @@ defmodule BookerWeb.BookController do
     ownership = Repo.get_by(BookOwnership, book_id: id, user_id: current_user_id)
 
     case ownership do
-      %BookOwnership{} ->
-        conn |> render(BookerWeb.BookOwnershipView, "show_owned.json", book_ownership: ownership)
+      %BookOwnership{read: read} ->
+        render conn, BookerWeb.BookOwnershipView, "show.json-api", data: %{owned: true, read: read}
+        # conn |> render(BookerWeb.BookOwnershipView, "show_owned.json", book_ownership: ownership)
       nil ->
-        conn |> render(BookerWeb.BookOwnershipView, "show_unowned.json", book_ownership: false)
+        render conn, BookerWeb.BookOwnershipView, "show.json-api", data: %{owned: false}
+        # conn |> render(BookerWeb.BookOwnershipView, "show_unowned.json", book_ownership: false)
     end
   end
 

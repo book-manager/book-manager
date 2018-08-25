@@ -15,6 +15,8 @@ defmodule Booker.Repo.Migrations.CreateBooks do
     end
 
     create index(:books, [:title])
-    create index(:books, [:author_id])
+
+
+    create unique_index(:books, [:isbn])
   end
 end

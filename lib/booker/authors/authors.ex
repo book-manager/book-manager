@@ -35,7 +35,7 @@ defmodule Booker.Authors do
       ** (Ecto.NoResultsError)
 
   """
-  def get_authors!(id), do: Repo.get!(Author, id)
+  def get_author!(id), do: Repo.get!(Author, id)
 
   @doc """
   Creates a authors.
@@ -49,7 +49,7 @@ defmodule Booker.Authors do
       {:error, %Ecto.Changeset{}}
 
   """
-  def create_authors(attrs \\ %{}) do
+  def create_author(attrs \\ %{}) do
     %Author{}
     |> Author.changeset(attrs)
     |> Repo.insert()
@@ -67,7 +67,7 @@ defmodule Booker.Authors do
       {:error, %Ecto.Changeset{}}
 
   """
-  def update_authors(%Author{} = authors, attrs) do
+  def update_author(%Author{} = authors, attrs) do
     authors
     |> Author.changeset(attrs)
     |> Repo.update()
@@ -85,7 +85,7 @@ defmodule Booker.Authors do
       {:error, %Ecto.Changeset{}}
 
   """
-  def delete_authors(%Author{} = authors) do
+  def delete_author(%Author{} = authors) do
     Repo.delete(authors)
   end
 
@@ -98,7 +98,7 @@ defmodule Booker.Authors do
       %Ecto.Changeset{source: %Authors{}}
 
   """
-  def change_authors(%Author{} = authors) do
+  def change_author(%Author{} = authors) do
     Author.changeset(authors, %{})
   end
 
