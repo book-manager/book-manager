@@ -1,12 +1,12 @@
-defmodule Booker.Author do
+defmodule Booker.Authors do
   @moduledoc """
-  The Author context.
+  The Authors context.
   """
 
   import Ecto.Query, warn: false
   alias Booker.Repo
 
-  alias Booker.Author.Authors
+  alias Booker.Authors.Author
 
   @doc """
   Returns the list of authors.
@@ -18,7 +18,7 @@ defmodule Booker.Author do
 
   """
   def list_authors do
-    Repo.all(Authors)
+    Repo.all(Author)
   end
 
   @doc """
@@ -35,7 +35,7 @@ defmodule Booker.Author do
       ** (Ecto.NoResultsError)
 
   """
-  def get_authors!(id), do: Repo.get!(Authors, id)
+  def get_authors!(id), do: Repo.get!(Author, id)
 
   @doc """
   Creates a authors.
@@ -50,8 +50,8 @@ defmodule Booker.Author do
 
   """
   def create_authors(attrs \\ %{}) do
-    %Authors{}
-    |> Authors.changeset(attrs)
+    %Author{}
+    |> Author.changeset(attrs)
     |> Repo.insert()
   end
 
@@ -67,9 +67,9 @@ defmodule Booker.Author do
       {:error, %Ecto.Changeset{}}
 
   """
-  def update_authors(%Authors{} = authors, attrs) do
+  def update_authors(%Author{} = authors, attrs) do
     authors
-    |> Authors.changeset(attrs)
+    |> Author.changeset(attrs)
     |> Repo.update()
   end
 
@@ -85,7 +85,7 @@ defmodule Booker.Author do
       {:error, %Ecto.Changeset{}}
 
   """
-  def delete_authors(%Authors{} = authors) do
+  def delete_authors(%Author{} = authors) do
     Repo.delete(authors)
   end
 
@@ -98,11 +98,11 @@ defmodule Booker.Author do
       %Ecto.Changeset{source: %Authors{}}
 
   """
-  def change_authors(%Authors{} = authors) do
-    Authors.changeset(authors, %{})
+  def change_authors(%Author{} = authors) do
+    Author.changeset(authors, %{})
   end
 
-  alias Booker.Author.Ownership
+  alias Booker.Authors.Ownership
 
   @doc """
   Returns the list of ownership.

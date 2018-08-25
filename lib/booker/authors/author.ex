@@ -1,4 +1,4 @@
-defmodule Booker.Author.Authors do
+defmodule Booker.Authors.Author do
   use Ecto.Schema
   import Ecto.Changeset
 

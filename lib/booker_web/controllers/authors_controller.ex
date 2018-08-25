@@ -3,8 +3,8 @@ defmodule BookerWeb.AuthorsController do
   use BookerWeb, :controller
   import Ecto.Query
 
-  alias Booker.Author
-  alias Booker.Author.{Authors, Ownership}
+  alias Booker.Authors
+  alias Booker.Authors.{ Author, Ownership }
   alias Booker.Books.{Book, BookOwnership}
 
   alias Booker.Repo
@@ -19,7 +19,7 @@ defmodule BookerWeb.AuthorsController do
   def index(conn, _params) do
     current_user_id = conn.assigns.current_user.id
     query = from o in Ownership,
-            join: a in Authors,
+            join: a in Author,
             on: o.id == a.id,
             where: o.user_id == ^current_user_id,
             select: a
@@ -41,7 +41,7 @@ defmodule BookerWeb.AuthorsController do
     surname = authors_params["surname"]
 
     # Check if we already have that author in DB
-    query = from a in Booker.Author.Authors,
+    query = from a in Booker.Authors.Author,
             where: a.name == ^name and a.surname == ^surname,
             select: a
 
@@ -50,25 +50,25 @@ defmodule BookerWeb.AuthorsController do
     case authors do
       [] ->
         Logger.debug("We don`t have author with name #{authors_params["name"]} and surname #{authors_params["surname"]}")
-        with {:ok, %Authors{} = authors} <- Author.create_authors(authors_params) do
-          with {:ok, %Ownership{} = ownership} <- Author.create_ownership(%{user_id: current_user_id, author_id: authors.id}) do
+        with {:ok, %Author{} = authors} <- Authors.create_authors(authors_params) do
+          with {:ok, %Ownership{} = ownership} <- Authors.create_ownership(%{user_id: current_user_id, author_id: authors.id}) do
             conn
             |> put_status(:created)
             |> render("index.json", authors: authors)
           end
         end
-      [%Authors{id: id}] ->
+      [%Author{id: id}] ->
         Logger.debug("We already have that author in DB, create ownership relation")
         ownership = Repo.get_by(Ownership, author_id: id, user_id: current_user_id)
         case ownership do
-          %Booker.Author.Ownership{} ->
+          %Booker.Authors.Ownership{} ->
             Logger.debug("User already has that author in collection")
             conn
               |> put_status(:unprocessable_entity)
               |> render(BookerWeb.ChangesetView, "error.json", changeset: "You already have that author in your collection")
           nil ->
             Logger.debug("Creating ownership between #{current_user_id} and #{id}")
-            with {:ok, %Ownership{} = ownership} <- Author.create_ownership(%{user_id: current_user_id, author_id: id}) do
+            with {:ok, %Ownership{} = ownership} <- Authors.create_ownership(%{user_id: current_user_id, author_id: id}) do
               conn
               |> put_status(:created)
               |> render("index.json", authors: authors)
@@ -90,7 +90,7 @@ defmodule BookerWeb.AuthorsController do
   def search(conn, %{"query" => query}) do
     formatted = query |> String.replace(" ", "|")
     # TODO: Move this to Author module
-    authors = Repo.execute_and_load("SELECT * FROM authors WHERE id IN (SELECT searchable_id FROM author_search WHERE to_tsvector('english', select_term) @@ to_tsquery($1));", [ formatted ], Authors)
+    authors = Repo.execute_and_load("SELECT * FROM authors WHERE id IN (SELECT searchable_id FROM author_search WHERE to_tsvector('english', select_term) @@ to_tsquery($1));", [ formatted ], Author)
 
     conn
       |> put_status(:ok)
@@ -112,7 +112,7 @@ defmodule BookerWeb.AuthorsController do
   def create_ownership(conn, %{"author_id" => author_id}) do
     current_user_id = conn.assigns.current_user.id
 
-    with {:ok, %Ownership{} = ownership} <- Author.create_ownership(%{user_id: current_user_id, author_id: author_id}) do
+    with {:ok, %Ownership{} = ownership} <- Authors.create_ownership(%{user_id: current_user_id, author_id: author_id}) do
       conn
       |> put_status(:created)
       |> render("owned.json", owned: true)
@@ -156,14 +156,14 @@ defmodule BookerWeb.AuthorsController do
   def update(conn, %{"id" => id, "authors" => authors_params}) do
     authors = Author.get_authors!(id)
 
-    with {:ok, %Authors{} = authors} <- Author.update_authors(authors, authors_params) do
+    with {:ok, %Author{} = authors} <- Author.update_authors(authors, authors_params) do
       render(conn, "show.json", authors: authors)
     end
   end
 
   def delete(conn, %{"id" => id}) do
     authors = Author.get_authors!(id)
-    with {:ok, %Authors{}} <- Author.delete_authors(authors) do
+    with {:ok, %Author{}} <- Authors.delete_authors(authors) do
       send_resp(conn, :no_content, "")
     end
   end

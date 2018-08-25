@@ -1,4 +1,4 @@
-defmodule Booker.Author.Ownership do
+defmodule Booker.Authors.Ownership do
   use Ecto.Schema
   import Ecto.Changeset
 
