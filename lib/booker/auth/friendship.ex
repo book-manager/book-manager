@@ -1,10 +1,16 @@
 defmodule Booker.Auth.Friendship do
+  @moduledoc """
+  Represents friendship between two users
+  """
   use Ecto.Schema
   import Ecto.Changeset
 
+  alias Booker.Auth.User
+
   schema "friendships" do
-    field :friend_a_id, :id
-    field :friend_b_id, :id
+    belongs_to :user, User
+    belongs_to :friend, User
+
     field :pending, :boolean, default: true
 
     timestamps()
@@ -13,7 +19,7 @@ defmodule Booker.Auth.Friendship do
   @doc false
   def changeset(friendship, attrs) do
     friendship
-    |> cast(attrs, [:friend_a_id, :friend_b_id, :pending])
+    |> cast(attrs, [:friend, :user, :pending, :user_id, :friend_id])
     |> validate_required([])
   end
 end

@@ -37,9 +37,8 @@ defmodule BookerWeb.UserController do
   def search_user(conn, %{"query" => query}) do
     formatted = query |> String.replace(" ", "|")
     users = Repo.execute_and_load("SELECT * FROM users WHERE id IN (SELECT searchable_id FROM searches WHERE to_tsvector('english', term) @@ to_tsquery($1));", [ formatted ], User)
-    conn
-      |> put_status(:ok)
-      |> render("index.json", users: users)
+
+    render conn, "index.json-api", data: users
   end
 
 
@@ -117,7 +116,8 @@ defmodule BookerWeb.UserController do
   @spec show(Plug.Conn.t(), map()) :: Plug.Conn.t()
   def show(conn, %{"id" => id}) do
     user = Auth.get_user!(id)
-    render(conn, "show.json", user: user)
+    render conn, "show.json-api", data: user
+    # render(conn, "show.json", user: user)
   end
 
   @spec update(any(), map()) :: any()

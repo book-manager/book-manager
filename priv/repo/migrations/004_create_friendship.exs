@@ -3,8 +3,8 @@ defmodule Booker.Repo.Migrations.CreateFriendship do
 
   def change do
     create table(:friendships) do
-      add :friend_a_id, references(:users, on_delete: :nothing), null: false
-      add :friend_b_id, references(:users, on_delete: :nothing), null: false
+      add :user_id, references(:users, on_delete: :nothing), null: false
+      add :friend_id, references(:users, on_delete: :nothing), null: false
       add :pending, :boolean, default: false, null: false
 
       timestamps()

@@ -27,7 +27,7 @@ Booker.Auth.create_user(%{
   name: "Mike",
   surname: "Warren",
   password: "password",
-  avatar_url: "https://randomuser.me/api/portraits/med/men/83.jpg",
+  avatar_url: "https://storage.googleapis.com/images.bookmanager.pro/user/myAvatar.png",
   is_admin: false
 })
 

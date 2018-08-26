@@ -1,5 +1,5 @@
 require Logger
-
+require IEx
 defmodule BookerWeb.FriendshipController do
   use BookerWeb, :controller
 
@@ -8,111 +8,53 @@ defmodule BookerWeb.FriendshipController do
   alias Booker.Repo
 
   import Ecto.Query
+  alias Ecto.Changeset
 
   action_fallback(BookerWeb.FallbackController)
 
   def create(conn, %{"friend_id" => friend_id}) do
     current_user = conn.assigns.current_user
-    # check if friend request exists
+    friend = Auth.get_user!(friend_id)
 
-    query =
-      from(f in Friendship,
-        where: f.friend_b_id == ^current_user.id and f.friend_a_id == ^friend_id,
-        select: f
-      )
+    friendship = %Friendship{friend: friend, user: current_user} |> Repo.insert!
 
-    response = query |> Repo.all()
+    render conn, "show.json-api", data: friendship
+  end
 
-    case response do
+  def check_friendship(conn, %{"id" => friend_id}) do
+    id = conn.assigns.current_user.id
+    query = from f in Friendship,
+            where: f.user_id == ^id and f.friend_id == ^friend_id,
+            select: f
+
+    friendship = Repo.all(query)
+
+    case friendship do
       [] ->
-        with {:ok, %Friendship{} = friendship} <-
-               Auth.create_friendship(%{
-                 friend_a_id: current_user.id,
-                 friend_b_id: friend_id,
-                 pending: true
-               }) do
-          conn
-          |> put_status(:created)
-          |> render("show.json", friendship: friendship)
-        end
-
-      [%Friendship{pending: true}] ->
-        friendship = response |> List.first()
-        Auth.update_friendship(friendship, %{pending: false})
-
-        conn
-        |> put_status(:created)
-        |> render("show.json", friendship: friendship)
+        render conn, "show.json-api", data: %{}
+      [%Friendship{} = result] ->
+        render conn, "show.json-api", data: result
     end
   end
 
-  def check_friendship(conn, %{"friend_id" => friend_id}) do
-    current_user_id = conn.assigns.current_user.id
+  def check_friendship_incoming(conn, %{"id" => friend_id}) do
+    id = conn.assigns.current_user.id
+    query = from f in Friendship,
+            where: f.user_id == ^friend_id and f.friend_id == ^id,
+            select: f
 
-    # Check if we send request to that user
-    outgoing_query =
-      from(u in Friendship,
-        where: u.friend_a_id == ^current_user_id and u.friend_b_id == ^friend_id,
-        select: u
-      )
-
-    response = outgoing_query |> Repo.all()
-
-    # Check if user send us requests
-    incoming_query =
-      from(u in Friendship,
-        where: u.friend_b_id == ^current_user_id and u.friend_a_id == ^friend_id,
-        select: u
-      )
-
-    incoming_response = incoming_query |> Repo.all()
-
-    # TODO: Probably we can use with
-    case response do
+    friendship = Repo.all(query)
+    case friendship do
       [] ->
-        case incoming_response do
-          [] ->
-            Logger.info(
-              "Friendship between #{current_user_id} and #{friend_id} is in state: false"
-            )
-
-            conn
-            |> render("check-friendship.json", friendship: false)
-
-          [%Friendship{pending: true}] ->
-            Logger.info(
-              "Friendship between #{current_user_id} and #{friend_id} is coming from other user"
-            )
-
-            conn
-            |> render("check-friendship.json", friendship: "initiated")
-
-          [%Friendship{pending: false}] ->
-            Logger.info(
-              "Friendship between #{current_user_id} and #{friend_id} is in state: true"
-            )
-
-            conn
-            |> render("check-friendship.json", friendship: true)
-        end
-
-      [%Friendship{pending: true}] ->
-        Logger.info("Friendship between #{current_user_id} and #{friend_id} is in state: pending")
-
-        conn
-        |> render("check-friendship.json", friendship: "pending")
-
-      [%Friendship{pending: false}] ->
-        Logger.info("Friendship between #{current_user_id} and #{friend_id} is in state: true")
-
-        conn
-        |> render("check-friendship.json", friendship: true)
+        render conn, "show.json-api", data: %{}
+      [%Friendship{} = result] ->
+        render conn, "show.json-api", data: result
+      [_ | _] ->
+        render conn, "show.json-api", data: %{}
     end
   end
 
   def index(conn, _params) do
-    current_user = conn.assigns.current_user
-
     query =
       from(u in User,
         join: f in Friendship,
@@ -127,16 +69,31 @@ defmodule BookerWeb.FriendshipController do
 
   def pending_requests(conn, _params) do
     current_user_id = conn.assigns.current_user.id
+    query = from f in Friendship,
+            where: f.pending == true and f.user_id == ^current_user_id,
+            select: f
 
-    query =
-      from(u in User,
-        join: f in Friendship,
-        on: f.friend_a_id == u.id,
-        where: f.friend_b_id == ^current_user_id and f.pending == true,
-        select: u
-      )
+    friendships = Repo.all(query)
 
-    results = query |> Repo.all()
-    render(conn, "index.json", friendships: results)
+    render conn, "index.json-api", data: friendships
+  end
+
+  def accept(conn, %{"id" => id}) do
+    current_user_id = conn.assigns.current_user.id
+    query = from f in Friendship,
+            where: f.pending == true and f.user_id == ^id and f.friend_id == ^current_user_id,
+            select: f
+
+    friendship = Repo.all(query) |> List.first
+    friendship_changeset = Changeset.change(friendship, %{pending: false})
+    Repo.update!(friendship_changeset)
+
+
+    current_user = conn.assigns.current_user
+    friend = Auth.get_user!(id)
+
+    friendship = %Friendship{friend: friend, user: current_user, pending: false} |> Repo.insert!
+
+    render conn, "show.json-api", data: friendship
   end
 end

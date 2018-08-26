@@ -1,7 +1,7 @@
 defmodule Booker.Auth.User do
   use Ecto.Schema
   import Ecto.Changeset
-  alias Booker.Auth.User
+  alias Booker.Auth.{Friendship, User}
   alias Booker.Authors.{Author, Ownership}
   alias Comeonin.Bcrypt
 
@@ -15,7 +15,13 @@ defmodule Booker.Auth.User do
 
     timestamps()
 
-    many_to_many :authors, Author, join_through: Ownership
+    many_to_many :authors, Author,
+      join_through: Ownership
+
+    many_to_many :friends, User,
+      join_through: Friendship,
+      join_keys: [user_id: :id, friend_id: :id],
+      on_delete: :delete_all
   end
 
   @required_fields [
@@ -31,6 +37,7 @@ defmodule Booker.Auth.User do
       |> cast(attrs, [:email, :name, :surname, :avatar_url, :password, :is_admin, :inserted_at, :updated_at])
       |> validate_required(@required_fields)
       |> cast_assoc(:authors)
+      |> cast_assoc(:friends)
       |> put_pass_hash()
   end
 

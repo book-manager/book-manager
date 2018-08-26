@@ -41,7 +41,7 @@ defmodule BookerWeb.Router do
     end
 
     scope "/friends" do
-      post "/search", UserController, :search_user
+      get "/search/:query", UserController, :search_user
       get "/", FriendshipController, :index
       get "/book/:id", UserController, :show_friends_book
     end
@@ -53,10 +53,10 @@ defmodule BookerWeb.Router do
 
     scope "/friendship" do
       post "/", FriendshipController, :create
-      post "/check-friendship", FriendshipController, :check_friendship
+      get "/check-friendship/:id", FriendshipController, :check_friendship
+      get "/check-incoming/:id", FriendshipController, :check_friendship_incoming
       get "/pending", FriendshipController, :pending_requests
-      # get "/", UserController, :fetch_users_detail
-      # post "/search", UserController, :search_user
+      get "/accept/:id", FriendshipController, :accept
     end
   end
 
