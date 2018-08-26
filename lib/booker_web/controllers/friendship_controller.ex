@@ -70,12 +70,16 @@ defmodule BookerWeb.FriendshipController do
   def pending_requests(conn, _params) do
     current_user_id = conn.assigns.current_user.id
     query = from f in Friendship,
-            where: f.pending == true and f.user_id == ^current_user_id,
-            select: f
+            join: u in User,
+            on: u.id == f.user_id,
+            where: f.pending == true and f.friend_id == ^current_user_id,
+            select: u
 
     friendships = Repo.all(query)
 
-    render conn, "index.json-api", data: friendships
+    Logger.debug("Pending requests list: #{inspect friendships}")
+
+    render conn, BookerWeb.UserView, "index.json-api", data: friendships
   end
 
   def accept(conn, %{"id" => id}) do
