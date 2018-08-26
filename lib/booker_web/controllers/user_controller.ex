@@ -3,9 +3,7 @@ defmodule BookerWeb.UserController do
   use BookerWeb, :controller
 
   alias Booker.Auth
-  alias Booker.Auth.Friendship
-  alias Booker.Auth.Guardian
-  alias Booker.Auth.User
+  alias Booker.Auth.{Friendship, Guardian, User}
   alias Booker.Books.BookOwnership
   alias Booker.Repo
 
@@ -16,7 +14,8 @@ defmodule BookerWeb.UserController do
   @spec index(Plug.Conn.t(), any()) :: Plug.Conn.t()
   def index(conn, _params) do
     users = Auth.list_users()
-    render(conn, "index.json", users: users)
+    # render(conn, "index.json", users: users)
+    render conn, "index.json-api", data: users
   end
 
   @spec login(Plug.Conn.t(), map()) :: Plug.Conn.t()
@@ -25,14 +24,9 @@ defmodule BookerWeb.UserController do
       |> login_reply(conn)
   end
 
-  @doc """
-  Creates encoded token with current user, without any custom claims, token_type is access and TTL is 1 day.
-
-  Returns %{token: created_token, user: current_user}
-  """
   defp login_reply({:ok, user}, conn) do
     {:ok, token, _} = Guardian.encode_and_sign(user, %{}, token_type: "access", ttl: {1, :days})
-    render conn, "token.json", token: token, user: user
+    render conn, "show.json-api", data: %{token: token, id: user.id, email: user.email, name: user.name, surname: user.surname, avatar_url: user.avatar_url, is_admin: user.is_admin}
   end
 
   @doc """
@@ -65,7 +59,7 @@ defmodule BookerWeb.UserController do
   end
 
   @spec register(any(), map()) :: any()
-  def register(conn, %{"email" => email, "first_name" => name, "last_name"=> surname, "password" => password, "cpassword" => re_password}) do
+  def register(conn, %{"email" => email, "name" => name, "surname"=> surname, "password" => password, "cpassword" => re_password}) do
      case password == re_password do
       true ->
         with {:ok, %User{} = user} <- Auth.create_user(%{ "email" => email, "name" => name, "surname"=> surname, "password" => password }) do
