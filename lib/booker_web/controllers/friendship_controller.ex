@@ -54,17 +54,10 @@ defmodule BookerWeb.FriendshipController do
     end
   end
 
-  def index(conn, _params) do
-    query =
-      from(u in User,
-        join: f in Friendship,
-        on: f.friend_a_id == u.id,
-        select: u
-      )
-
-    friendships = query |> Repo.all()
-
-    render(conn, "index.json", friendships: friendships)
+  def index(conn, params) do
+    current_user = conn.assigns.current_user |> Repo.preload(:friends)
+    friends = current_user.friends
+    render conn, "index.json-api", data: friends
   end
 
   def pending_requests(conn, _params) do
