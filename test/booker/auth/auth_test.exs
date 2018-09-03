@@ -35,7 +35,7 @@ defmodule Booker.AuthTest do
       assert user.email == "some email"
       assert user.is_admin == true
       assert user.name == "some name"
-      assert user.password == "some password"
+      assert user.password != "some password"
       assert user.surname == "some surname"
     end
 
@@ -51,7 +51,7 @@ defmodule Booker.AuthTest do
       assert user.email == "some updated email"
       assert user.is_admin == false
       assert user.name == "some updated name"
-      assert user.password == "some updated password"
+      assert user.password != "some updated password"
       assert user.surname == "some updated surname"
     end
 

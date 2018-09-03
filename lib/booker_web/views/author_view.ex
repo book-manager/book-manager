@@ -1,15 +1,19 @@
 defmodule BookerWeb.AuthorView do
   use BookerWeb, :view
-  use JaSerializer.PhoenixView
+  alias BookerWeb.{AuthorView, BookView}
 
-  attributes [:id, :name, :surname, :description, :avatar_url]
+  def render("index.json", %{authors: authors}) do
+    %{authors: render_many(authors, AuthorView, "author.json")}
+  end
 
-  has_many :books,
-    serializer: BookerWeb.BookView,
-    include: false,
-    identifiers: :when_included
+  def render("show.json", %{author: author}) do
+    %{author: render_one(author, AuthorView, "author.json")}
+  end
 
-  def type do
-      "Author"
+  def render("author.json", %{author: author}) do
+    author
+    |> Map.from_struct()
+    |> Map.take([:id, :name, :surname, :description, :avatar_url])
+    |> Map.put(:books, BookView.render("index.json", %{books: author.books}))
   end
 end

@@ -81,7 +81,7 @@ defmodule BookerWeb.BookController do
   def show(conn, %{"id" => id}) do
     book = Books.get_book!(id) |> Repo.preload([:author])
 
-    render conn, "show.json-api", data: book, opts: [include: "author"]
+    render conn, "show.json", book: book
   end
 
   @doc """
@@ -118,21 +118,6 @@ defmodule BookerWeb.BookController do
       |> render(BookerWeb.BookOwnershipView, "show.json", book_ownership: ownership)
     end
   end
-
-  @doc """
-  Return rating given to this book by community
-
-  Returns Integer
-  """
-  # def show_rating(conn, %{"book_id" => book_id}) do
-  #   current_user_id = conn.assigns.current_user.id
-  #   ownership = Repo.get_by(BookOwnership, book_id: id, user_id: current_user_id)
-
-  #   case ownership do
-  #     %BookOwnership{} ->
-
-  #   end
-  # end
 
   def update(conn, %{"id" => id, "book" => book_params}) do
     book = Books.get_book!(id)

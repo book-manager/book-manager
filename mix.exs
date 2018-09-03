@@ -47,7 +47,9 @@ defmodule Booker.Mixfile do
       {:credo, "~> 0.10.0", only: [:dev, :test], runtime: false},
       {:httpoison, "~> 1.1"},
       {:poison, "~> 3.1"},
-      {:ja_serializer, "~> 0.13.0"}
+      {:ja_serializer, "~> 0.13.0"},
+      {:absinthe, "~> 1.4.0"},
+      {:absinthe_plug, "~> 1.4"}
     ]
   end
 

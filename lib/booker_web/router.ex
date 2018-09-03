@@ -10,6 +10,9 @@ defmodule BookerWeb.Router do
     plug Guardian.Plug.EnsureAuthenticated
   end
 
+  forward "/graph", Absinthe.Plug,
+    schema: BookerWeb.Schema
+
   scope "/api", BookerWeb do
     pipe_through [:api, :auth]
 

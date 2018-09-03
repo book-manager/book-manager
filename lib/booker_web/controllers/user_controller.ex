@@ -92,25 +92,25 @@ defmodule BookerWeb.UserController do
     end
   end
 
-    @doc """
+  @doc """
   Return friends that own given book
 
   Returns [Friends]
   """
   def show_friends_book(conn, %{"id" => book_id}) do
-    query =
-      from(o in BookOwnership,
-        join: u in User,
-        on: u.id == o.user_id,
-        join: f in Friendship,
-        on: f.friend_b_id == u.id,
-        where: o.book_id == ^book_id,
-        select: u
-      )
+    # query =
+    #   from(o in BookOwnership,
+    #     join: u in User,
+    #     on: u.id == o.user_id,
+    #     join: f in Friendship,
+    #     on: f.friend == u.id,
+    #     where: o.book_id == ^book_id,
+    #     select: u
+    #   )
 
-    friends = query |> Repo.all()
-    Logger.info("Users that have given book and are my friends: #{inspect friends}")
-    conn |> render("index.json", users: friends)
+    # friends = query |> Repo.all()
+    # Logger.info("Users that have given book and are my friends: #{inspect friends}")
+    conn |> render("index.json", users: [])
   end
 
   @spec show(Plug.Conn.t(), map()) :: Plug.Conn.t()
