@@ -1,13 +1,16 @@
 defmodule BookerWeb.Schema.Types do
+  @moduledoc """
+  Types for GraphQL to be used in application
+  """
   use Absinthe.Schema.Notation
 
   use Absinthe.Ecto, repo: Booker.Repo
 
   object :author do
-    field(:id, :id)
-    field(:name, :string)
-    field(:surname, :string)
-    field(:avatar_url, :string)
+    field :id, :id
+    field :name, :string
+    field :surname, :string
+    field :avatar_url, :string
     field :description, :string
 
     field(:books, :book, resolve: assoc(:books))
@@ -25,6 +28,7 @@ defmodule BookerWeb.Schema.Types do
     field :id, :id
     field :name, :string
     field :surname, :string
+    field :email, :string
     field :avatar_url, :string
   end
 

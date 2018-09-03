@@ -14,18 +14,6 @@ defmodule BookerWeb.AuthorController do
   action_fallback BookerWeb.FallbackController
 
   @doc """
-  List authors owned by current user
-
-  Returns [Author]
-  """
-  def index(conn, _params) do
-    current_user = conn.assigns.current_user |> Repo.preload(:authors)
-    authors = current_user.authors |> Repo.preload([:books])
-
-    render conn, "index.json", authors: authors
-  end
-
-  @doc """
   Creates Author and Ownership.
   If Author is already present in database, we just create ownership relation between Author and User.
   If the given author is new, we create new row im authors table and relation in ownership table.

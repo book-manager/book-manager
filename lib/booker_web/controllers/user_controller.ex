@@ -18,16 +18,6 @@ defmodule BookerWeb.UserController do
     render conn, "index.json-api", data: users
   end
 
-  @spec login(Plug.Conn.t(), map()) :: Plug.Conn.t()
-  def login(conn, %{"email" => email, "password" => password}) do
-    Auth.authenticate_user(email, password)
-      |> login_reply(conn)
-  end
-
-  defp login_reply({:ok, user}, conn) do
-    {:ok, token, _} = Guardian.encode_and_sign(user, %{}, token_type: "access", ttl: {1, :days})
-    render conn, "show.json-api", data: %{token: token, id: user.id, email: user.email, name: user.name, surname: user.surname, avatar_url: user.avatar_url, is_admin: user.is_admin}
-  end
 
   @doc """
   Search for users based on provided query. It can be name or surname or name and surname. We replace spaces with | so full text search in Postgres.
