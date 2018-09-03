@@ -102,8 +102,8 @@ defmodule Booker.Auth do
     User.changeset(user, %{})
   end
 
-  def authenticate_user(username, password) do
-    query = from u in User, where: u.email == ^username
+  def authenticate_user(email, password) do
+    query = from u in User, where: u.email == ^email
     Repo.one(query)
     |> check_password(password)
   end

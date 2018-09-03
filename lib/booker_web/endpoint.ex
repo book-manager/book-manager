@@ -25,9 +25,6 @@ defmodule BookerWeb.Endpoint do
     pass: ["*/*"],
     json_decoder: Poison
 
-  plug Absinthe.Plug,
-    schema: BookerWeb.Schema
-
   plug Plug.MethodOverride
   plug Plug.Head
 

@@ -49,7 +49,8 @@ defmodule Booker.Mixfile do
       {:poison, "~> 3.1"},
       {:ja_serializer, "~> 0.13.0"},
       {:absinthe, "~> 1.4.0"},
-      {:absinthe_plug, "~> 1.4"}
+      {:absinthe_plug, "~> 1.4"},
+      {:absinthe_ecto, "~> 0.1.3"}
     ]
   end
 

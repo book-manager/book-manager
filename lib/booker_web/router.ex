@@ -1,3 +1,21 @@
+defmodule AuthWrapper do
+  @moduledoc """
+  We need to wrap this in module to avoid Phoenix error about double forward to the same module
+  """
+  use Plug.Builder
+
+  plug Absinthe.Plug, schema: Booker.Auth.Schema
+end
+
+defmodule AuthGraphiWrapper do
+  @moduledoc """
+  We need to wrap this in module to avoid Phoenix error about double forward to the same module
+  """
+  use Plug.Builder
+
+  plug Absinthe.Plug.GraphiQL,  schema: Booker.Auth.Schema
+end
+
 defmodule BookerWeb.Router do
   use BookerWeb, :router
 
@@ -10,8 +28,27 @@ defmodule BookerWeb.Router do
     plug Guardian.Plug.EnsureAuthenticated
   end
 
-  forward "/graph", Absinthe.Plug,
+  pipeline :graphql do
+    plug BookerWeb.Context
+  end
+
+  forward "/graphiql/auth", AuthGraphiWrapper
+  forward "/graphiql", Absinthe.Plug.GraphiQL,
     schema: BookerWeb.Schema
+
+  scope "/graph" do
+    pipe_through :graphql
+
+    forward "/", Absinthe.Plug,
+      schema: BookerWeb.Schema
+  end
+
+  forward "/auth", AuthWrapper
+
+  # scope "/", BookerWeb do
+  #   post "/login", UserController, :login
+  #   post "/register", UserController, :register
+  # end
 
   scope "/api", BookerWeb do
     pipe_through [:api, :auth]
@@ -67,14 +104,4 @@ defmodule BookerWeb.Router do
     plug Booker.Auth.AdminPlug
   end
 
-  scope "/", BookerWeb do
-    pipe_through [:api]
-    post "/login", UserController, :login
-    post "/register", UserController, :register
-  end
-
-  scope "/auth", BookerWeb do
-    pipe_through :api
-    post "/", UserController, :check_auth
-  end
 end
