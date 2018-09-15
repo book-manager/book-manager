@@ -1,6 +1,10 @@
 defmodule Booker.Auth.User do
+  @moduledoc """
+  Module that represents User entity.
+  """
   use Ecto.Schema
   import Ecto.Changeset
+
   alias Booker.Auth.{Friendship, User}
   alias Booker.Authors.{Author, Ownership}
   alias Comeonin.Bcrypt

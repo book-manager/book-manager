@@ -1,4 +1,7 @@
 defmodule Booker.Auth.Pipeline do
+  @moduledoc """
+  Which Plug modules should we apply on incoming connection
+  """
   use Guardian.Plug.Pipeline,
     otp_app: :booker,
     error_handler: Booker.Auth.ErrorHandler,
@@ -6,5 +9,5 @@ defmodule Booker.Auth.Pipeline do
 
   plug Guardian.Plug.VerifyHeader, realm: "Bearer"
   plug Guardian.Plug.EnsureAuthenticated
-  plug Booker.Auth.CurrentUser
+  plug Booker.Auth.Plug.CurrentUser
 end

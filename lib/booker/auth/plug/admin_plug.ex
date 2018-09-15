@@ -1,4 +1,7 @@
-defmodule Booker.Auth.AdminPlug do
+defmodule Booker.Auth.Plug.AdminPlug do
+  @moduledoc """
+  Check if current user is admin
+  """
   import Plug.Conn
 
   def init(opts), do: opts

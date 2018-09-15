@@ -2,7 +2,7 @@ require Logger
 defmodule Booker.Auth.ErrorHandler do
   @moduledoc """
   Provides error handling for Auth module.
-  We try to handle all authentication and authorization error here, providing meaningfull error messages for frontend applciation
+  We try to handle all authentication and authorization error here, providing meaningfull error messages for frontend application
   """
   import Plug.Conn
 

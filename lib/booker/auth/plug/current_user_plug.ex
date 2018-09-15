@@ -1,4 +1,7 @@
-defmodule Booker.Auth.CurrentUser do
+defmodule Booker.Auth.Plug.CurrentUser do
+  @moduledoc """
+  Insert current user into connection
+  """
   import Plug.Conn
   alias Booker.Auth.Guardian
 
