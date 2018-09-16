@@ -1,3 +1,4 @@
+require IEx
 require Logger
 defmodule BookerWeb.UserController do
   use BookerWeb, :controller
@@ -7,6 +8,8 @@ defmodule BookerWeb.UserController do
   alias Booker.Books.BookOwnership
   alias Booker.Repo
 
+  alias Ecto.Changeset
+
   import Ecto.Query
 
   action_fallback BookerWeb.FallbackController
@@ -14,19 +17,23 @@ defmodule BookerWeb.UserController do
   @spec index(Plug.Conn.t(), any()) :: Plug.Conn.t()
   def index(conn, _params) do
     users = Auth.list_users()
-    # render(conn, "index.json", users: users)
-    render conn, "index.json-api", data: users
+    render(conn, "index.json", users: users)
   end
 
   @spec login(Plug.Conn.t(), map()) :: Plug.Conn.t()
   def login(conn, %{"email" => email, "password" => password}) do
-    Auth.authenticate_user(email, password)
-      |> login_reply(conn)
+    case Auth.authenticate_user(email, password) do
+      {:ok, user} ->
+        login_reply(conn, user)
+      {:error, _} ->
+        conn
+        |> put_status(401)
+    end
   end
 
-  defp login_reply({:ok, user}, conn) do
+  defp login_reply(conn, user) do
     {:ok, token, _} = Guardian.encode_and_sign(user, %{}, token_type: "access", ttl: {1, :days})
-    render conn, "show.json-api", data: %{token: token, id: user.id, email: user.email, name: user.name, surname: user.surname, avatar_url: user.avatar_url, is_admin: user.is_admin}
+    render(conn, "token.json", token: token)
   end
 
   @doc """
@@ -38,37 +45,24 @@ defmodule BookerWeb.UserController do
     formatted = query |> String.replace(" ", "|")
     users = Repo.execute_and_load("SELECT * FROM users WHERE id IN (SELECT searchable_id FROM searches WHERE to_tsvector('english', term) @@ to_tsquery($1));", [ formatted ], User)
 
-    render conn, "index.json-api", data: users
-  end
-
-
-  @doc """
-  Fetch details about users with given ids.
-
-  Returns [User]
-  """
-  def fetch_users_detail(conn, params) do
-    ids = Poison.decode!(params["ids"])
-    query = from u in Booker.Auth.User,
-              where: u.id in ^ids,
-              select: u
-    response = query |> Repo.all
-
-    render(conn, "index.json", users: response)
+    render(conn, "index.json", users: users)
   end
 
   @spec register(any(), map()) :: any()
   def register(conn, %{"email" => email, "name" => name, "surname"=> surname, "password" => password, "cpassword" => re_password}) do
      case password == re_password do
       true ->
-        with {:ok, %User{} = user} <- Auth.create_user(%{ "email" => email, "name" => name, "surname"=> surname, "password" => password }) do
-          conn
-            |> put_status(:created)
-            |> render("show.json", user: user)
+        case Auth.create_user(%{ "email" => email, "name" => name, "surname"=> surname, "password" => password }) do
+          {:ok, user} ->
+            conn
+              |> put_status(:created)
+              |> render("user.json", user: user)
+          {:error, %Changeset{errors: [email: {"email is already taken", []}]}} ->
+            conn
+              |> put_status(409)
         end
       false ->
-        # TODO: Handle different types of error
-        conn |> halt
+        conn |> put_status(422)
      end
   end
 
@@ -92,7 +86,7 @@ defmodule BookerWeb.UserController do
     end
   end
 
-    @doc """
+   @doc """
   Return friends that own given book
 
   Returns [Friends]
@@ -115,25 +109,11 @@ defmodule BookerWeb.UserController do
 
   @spec show(Plug.Conn.t(), map()) :: Plug.Conn.t()
   def show(conn, %{"id" => id}) do
-    user = Auth.get_user!(id)
-    render conn, "show.json-api", data: user
-    # render(conn, "show.json", user: user)
-  end
-
-  @spec update(any(), map()) :: any()
-  def update(conn, %{"id" => id, "user" => user_params}) do
-    user = Auth.get_user!(id)
-
-    with {:ok, %User{} = user} <- Auth.update_user(user, user_params) do
-      render(conn, "show.json", user: user)
-    end
-  end
-
-  @spec delete(any(), map()) :: any()
-  def delete(conn, %{"id" => id}) do
-    user = Auth.get_user!(id)
-    with {:ok, %User{}} <- Auth.delete_user(user) do
-      send_resp(conn, :no_content, "")
+    case Auth.get_user(id) do
+      nil ->
+        conn |> put_status(404)
+      %User{} = user ->
+        render(conn, "user.json", user: user)
     end
   end
 end

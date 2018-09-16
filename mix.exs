@@ -9,6 +9,7 @@ defmodule Booker.Mixfile do
       elixirc_paths: elixirc_paths(Mix.env),
       compilers: [:phoenix, :gettext] ++ Mix.compilers,
       start_permanent: Mix.env == :prod,
+      test_coverage: [tool: ExCoveralls],
       aliases: aliases(),
       deps: deps()
     ]
@@ -47,7 +48,8 @@ defmodule Booker.Mixfile do
       {:credo, "~> 0.10.0", only: [:dev, :test], runtime: false},
       {:httpoison, "~> 1.1"},
       {:poison, "~> 3.1"},
-      {:ja_serializer, "~> 0.13.0"}
+      {:ja_serializer, "~> 0.13.0"},
+      {:excoveralls, "~> 0.10", only: :test}
     ]
   end
 

@@ -37,6 +37,14 @@ defmodule Booker.Auth do
   """
   def get_user!(id), do: Repo.get!(User, id)
 
+
+  @doc """
+  Gets a single user.
+
+  Returns nil if user does not exist.
+  """
+  def get_user(id), do: Repo.get(User, id)
+
   @doc """
   Creates a user.
 
