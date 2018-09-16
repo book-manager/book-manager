@@ -40,6 +40,7 @@ defmodule Booker.Auth.User do
     user
       |> cast(attrs, [:email, :name, :surname, :avatar_url, :password, :is_admin, :inserted_at, :updated_at])
       |> validate_required(@required_fields)
+      |> unique_constraint(:email, message: "email is already taken")
       |> cast_assoc(:authors)
       |> cast_assoc(:friends)
       |> put_pass_hash()

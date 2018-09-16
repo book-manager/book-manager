@@ -30,3 +30,12 @@ docker-stop:
 
 credo:
 	mix credo --strict
+
+coverage:
+	 MIX_ENV=test mix coveralls.html
+
+test:
+	MIX_ENV=test mix test
+
+test-iex:
+	MIX_ENV=test iex -S mix test

@@ -17,3 +17,7 @@ config :booker, Booker.Repo,
   database: "booker_test",
   hostname: "localhost",
   pool: Ecto.Adapters.SQL.Sandbox
+
+config :booker, Booker.Auth.Guardian,
+  issuer: "booker", # Name of your app/company/product
+  secret_key: "test" # Replace this with the output of the mix command

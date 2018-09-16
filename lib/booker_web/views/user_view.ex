@@ -1,24 +1,17 @@
 defmodule BookerWeb.UserView do
   use BookerWeb, :view
-  use JaSerializer.PhoenixView
 
-  attributes [
-    :id,
-    :email,
-    :name,
-    :surname,
-    :avatar_url,
-    :is_admin,
-    :created_at,
-    :token
-  ]
+  alias BookerWeb.UserView
 
-  has_many :authors,
-    serialized: BookerWeb.AuthorView,
-    include: false,
-    identifiers: :when_included
+  def render("index.json", %{users: users}) do
+    %{data: render_many(users, UserView, "user.json")}
+  end
 
-  def type do
-    "User"
+  def render("user.json", %{user: user}) do
+    %{id: user.id, name: user.name, surname: user.surname, avatar_url: user.avatar_url, email: user.email}
+  end
+
+  def render("token.json", %{token: token}) do
+    %{token: token}
   end
 end

@@ -61,17 +61,12 @@ defmodule BookerWeb.Router do
   end
 
   pipeline :admin do
-    plug Booker.Auth.AdminPlug
+    plug Booker.Auth.Plug.AdminPlug
   end
 
   scope "/", BookerWeb do
     pipe_through [:api]
     post "/login", UserController, :login
     post "/register", UserController, :register
-  end
-
-  scope "/auth", BookerWeb do
-    pipe_through :api
-    post "/", UserController, :check_auth
   end
 end

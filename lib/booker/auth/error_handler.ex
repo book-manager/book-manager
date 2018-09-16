@@ -27,4 +27,9 @@ defmodule Booker.Auth.ErrorHandler do
         |> send_resp(401, body)
     end
   end
+
+  def auth_error(conn, {"email is already taken", []}) do
+    conn
+    |> send_resp(409, "email is already taken")
+  end
 end
