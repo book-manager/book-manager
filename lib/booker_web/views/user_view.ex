@@ -11,7 +11,7 @@ defmodule BookerWeb.UserView do
     %{id: user.id, name: user.name, surname: user.surname, avatar_url: user.avatar_url, email: user.email}
   end
 
-  def render("token.json", %{token: token}) do
-    %{token: token}
+  def render("token.json", %{token: token, user: user}) do
+    %{token: token, user: %{name: user.name, surname: user.surname, email: user.email, avatar_url: user.avatar_url, id: user.id}}
   end
 end
