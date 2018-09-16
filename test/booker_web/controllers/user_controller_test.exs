@@ -78,6 +78,7 @@ defmodule BookerWeb.UserControllerTest do
         |> json_response(200)
 
       assert String.length(response["token"]) != 0
+      assert response["user"]["name"] == @create_attrs.name
     end
 
     test "returns error when given incorrect credentials" do

@@ -33,7 +33,7 @@ defmodule BookerWeb.UserController do
 
   defp login_reply(conn, user) do
     {:ok, token, _} = Guardian.encode_and_sign(user, %{}, token_type: "access", ttl: {1, :days})
-    render(conn, "token.json", token: token)
+    render(conn, "token.json", %{token: token, user: user})
   end
 
   @doc """
