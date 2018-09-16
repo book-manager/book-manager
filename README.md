@@ -1,5 +1,6 @@
 # Booker
-
+[![Build Status](https://travis-ci.org/book-manager/book-manager.svg?branch=master)](https://travis-ci.org/book-manager/book-manager)
+[![Coverage Status](https://coveralls.io/repos/github/book-manager/book-manager/badge.svg?branch=master)](https://coveralls.io/github/book-manager/book-manager?branch=master)
 
 ### Setup
 
