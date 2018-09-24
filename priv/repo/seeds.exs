@@ -27,7 +27,7 @@ Booker.Auth.create_user(%{
   name: "Mike",
   surname: "Warren",
   password: "password",
-  avatar_url: "https://storage.googleapis.com/images.bookmanager.pro/user/myAvatar.png",
+  avatar_url: "https://images.bookmanager.pro/user/myAvatar.png",
   is_admin: false
 })
 
@@ -87,8 +87,8 @@ author = Repo.insert!(%Author{
 
 dworzec = %Book{
   title: "Dworzec śródmieście",
-  cover_url: "https://storage.googleapis.com/images.bookmanager.pro/book/cover/dworzec-srodmiescie.jpg",
-  thumbnail_url: "https://storage.googleapis.com/images.bookmanager.pro/book/resized/dworzec-srodmiescie.jpg",
+  cover_url: "https://images.bookmanager.pro/book/cover/dworzec-srodmiescie.jpg",
+  thumbnail_url: "https://images.bookmanager.pro/book/resized/dworzec-srodmiescie.jpg",
   isbn: "9788379641826",
   description: "Warszawa po Zagładzie to o wiele więcej, niż metro. Ludzie żyją tu na podziemnych dworcach, w piwnicach, w zapomnianych przejściach. Mieszkańcy tych miejsc śmieją się i płaczą, kochają i nienawidzą, czekają – czasem sami nie wiedzą na co; szukają – rzadko wiedząc czego. Żyją i umierają. Ale czasem, kiedy umierają zbyt gwałtownie, krucha równowaga i prowizoryczna umowa społeczna zostają naruszone. Czasem za krew można zapłacić nabojami, czasem książkami, a czasem odpłatą może być tylko krew.\n\nCzy po wojnie atomowej nie ma już dobrych ludzi? Czy każdy człowiek, nawet ten z pozoru najlepszy, ma w sobie utajonego zbrodniarza, który za godziwą zapłatę zrobi wszystko? Ile warte jest w takim świecie życie – życie brata, życie męża, życie syna..\n\nNapisana z wielkim rozmachem kulminacja przygód rudobrodego stalkera Borki z Kryształowego Pałacu, pokazująca życie Warszawy poza systemem stołecznego metra od chwili Zagłady, aż po czasy najnowsze. Klucz do zrozumienia wydarzeń trylogii warszawskiej, odkrywający wszystkie tajemnice i misterną siatkę powiązań między pozornie nieznajomymi bohaterami."
 }
@@ -103,8 +103,8 @@ stacja = %Book{
 
 kompleks = %Book{
   title: "Kompleks 7215",
-  cover_url: "https://storage.googleapis.com/images.bookmanager.pro/book/cover/kompleks-7215.jpg",
-  thumbnail_url: "https://storage.googleapis.com/images.bookmanager.pro/book/resized/kompleks-7215.jpg",
+  cover_url: "https://images.bookmanager.pro/book/cover/kompleks-7215.jpg",
+  thumbnail_url: "https://images.bookmanager.pro/book/resized/kompleks-7215.jpg",
   isbn: "9788375749878",
   description: "Warszawskie metro dwie dekady po wojnie atomowej.\n\nPo globalnym konflikcie termonuklearnym w podziemiach zrujnowanej aglomeracji warszawskiej żyją ludzie. Chowają się przed, radiacją, mutantami i innymi zagrożeniami, które sprawiły, że życie na powierzchni przestało być już możliwe.\n\nBorka, najemnik-intelektualista z sojuszu Kryształowy Pałac, dowódca oddziału stalkerów, podejmuje absurdalną misję odnalezienia Atomowej Kwatery Dowodzenia w Puszczy Kampinoskiej i wyrusza ze swoją drużyną w podróż na północ pierwszej linii metra, do ostatniej stacji i dalej…\n\nPrawdziwa gratka dla miłośników ZONY, literatury wojennej i militariów."
 }
@@ -129,40 +129,40 @@ golkowski = Repo.insert!(%Author{
 
 sztywny = %Book{
   title: "Sztywny",
-  cover_url: "https://storage.googleapis.com/images.bookmanager.pro/book/cover/sztywny.jpg",
-  thumbnail_url: "https://storage.googleapis.com/images.bookmanager.pro/resized/cover/sztywny.jpg",
+  cover_url: "https://images.bookmanager.pro/book/cover/sztywny.jpg",
+  thumbnail_url: "https://images.bookmanager.pro/resized/cover/sztywny.jpg",
   isbn: "9788379640645",
   description: "Sztywny ma problem.\n\nRzecz nie w tym, że jego partnerzy nie wracają z Zony.\n\nNie chodzi wcale o to, że zdecydowanie za dużo pije i za ostro wciąga.\n\nProblemem nie jest nawet to, że Sztywny nie potrafi utrzymać w spodniach swoich części niesfornych.Bynajmniej.\n\nProblemem jest sam Sztywny."
 }
 
 drugi_brzeg = %Book{
   title: "Drugi brzeg",
-  cover_url: "https://storage.googleapis.com/images.bookmanager.pro/book/cover/drugi_brzeg.jpg",
-  thumbnail_url: "https://storage.googleapis.com/images.bookmanager.pro/book/resized/drugi_brzeg.jpg",
+  cover_url: "https://images.bookmanager.pro/book/cover/drugi_brzeg.jpg",
+  thumbnail_url: "https:/.images.bookmanager.pro/book/resized/drugi_brzeg.jpg",
   isbn: "9788375749939",
   description: "Kontynuacja przebojowego Ołowianego Świtu\n\nPrypeć – wymarłe miasto-antychryst\n\nWyścig z czasem w świecie po katastrofie. Stalker Miszka przechodzi na prawy brzeg rzeki – nigdy wcześniej tak daleko nie zabrnął.\n\nPodróż do Serca Zony: Martwe Miasto, Oko Moskwy i czarnobylskie cmentarzysko statków w otoczeniu lasów i bagien."
 }
 
 droga = %Book{
   title: "Droga donikąd",
-  cover_url: "https://storage.googleapis.com/images.bookmanager.pro/book/cover/droga-donikad.jpg",
-  thumbnail_url: "https://storage.googleapis.com/images.bookmanager.pro/book/resized/droga-donikad.jpg",
+  cover_url: "https://images.bookmanager.pro/book/cover/droga-donikad.jpg",
+  thumbnail_url: "https://images.bookmanager.pro/book/resized/droga-donikad.jpg",
   isbn: "9788375745016",
   description: "„Droga do nikąd” to trzecia część trylogii Michała Gołkowskiego, a zarazem powrót do przeszłości i przedstalkerskiego życia Miszy sprzed „Ołowianego świtu”. Bohater, który w dwóch poprzednich tomach zawładnął umysłami tysięcy polskich czytelników, dochodzi do wniosku, że ma dosyć swojego monotonnego życia, bo mając wszystko, tak naprawdę nie ma niczego. Opuszcza swój warszawski apartament i wyrusza w nieznane, by mierzyć się z własną głupotą i wzbogacać bagaż doświadczeń. Uliczkami Mińska i ciemnymi zaułkami Brahina trafia do samej Zony. To tu poznaje tajemnice, które niczym stalker, będą go prześladować przez resztę jego życia.\n\n„Droga do nikąd” to koniec a zarazem początek historii, osadzonej w realiach kultowej już gry S.T.A.L.K.E.R. Wszyscy jesteśmy stalkerami, a największe zło jakie może spotkać cię z Zonie to drugi człowiek. Czy przeżyjesz?"
 }
 
 olowiany_swit = %Book{
   title: "Ołowiany świt",
-  cover_url: "https://storage.googleapis.com/images.bookmanager.pro/book/cover/olowiany_swit.jpg",
-  thumbnail_url: "https://storage.googleapis.com/images.bookmanager.pro/book/resized/olowiany_swit.jpg",
+  cover_url: "https://images.bookmanager.pro/book/cover/olowiany_swit.jpg",
+  thumbnail_url: "https://images.bookmanager.pro/book/resized/olowiany_swit.jpg",
   isbn: "9788375747362",
   description: "Zona - tajemnica, która wciąga, kusi i intryguje.\n\nJej historią jest świat współczesny. Jej dzieci to my.\n\nUniwersum S.T.A.L.K.E.R.a oczami Polaka – stara mleczarnia, martwy cieć, zapomniany kalendarz i wieża w środku lasu. Wchodzisz w to? Zresztą, już jesteś. Wszyscy jesteśmy – stalkerami. Dziećmi Sarkofagu.\n\nTutaj wrogiem jest zło, które może czaić się tuż obok, za naszymi plecami. Może przyjmować różne postaci, imiona i kształty; jednak najstraszniejszym, co możemy spotkać w Zonie - jest człowiek."
 }
 
 powrot = %Book{
   title: "Powrót",
-  cover_url: "https://storage.googleapis.com/images.bookmanager.pro/book/cover/powrot.jpg",
-  thumbnail_url: "https://storage.googleapis.com/images.bookmanager.pro/book/resized/powrot.jpg",
+  cover_url: "https://images.bookmanager.pro/book/cover/powrot.jpg",
+  thumbnail_url: "https://images.bookmanager.pro/book/resized/powrot.jpg",
   isbn: "9788379643202",
   description: "Obiecywał sobie, że już nigdy więcej. Że tamten raz był naprawdę ostatni. Że wszystko się zmieni, znormalnieje. Jednak ciężko jest udawać normalnego człowieka. Kiedy do drzwi puka przeszłość w osobie postrzelonego przyjaciela-stalkera z dawnych lat, a zimowa zawierucha niesie w sobie szepty zza dalekiego Kordonu, trzeba schować do kieszeni moralność i odwiesić na kołek solenne obietnice.\n\nNadchodzi pora, żeby raz jeszcze zostawić za sobą Dużą Ziemię i po raz kolejny - tym razem naprawdę już ostatni - wkroczyć na bezdroża ziemi utraconej, którą jest czarnobylska Zona. Bo nic innego nie ma znaczenia, kiedy człowiek usłyszy Zew.\n\nNadeszła pora ostatniej przygody."
 }
@@ -249,7 +249,7 @@ kroki = %Book{
   cover_url:
     "https://s3.eu-central-1.amazonaws.com/booker-cover/book/cover/77a50bd1-b0c0-c009-7e53-dd749e9efa4a.jpg",
   thumbnail_url:
-    "https://storage.googleapis.com/images.karolkozakowski.io/resized/2568-krokow.jpg",
+    "https://images.karolkozakowski.io/resized/2568-krokow.jpg",
   isbn: "9788375749298",
   description:
     "I znowu odliczamy 2586 kroków... Tylko tyle. I aż tyle. Opowiadanie po opowiadaniu. To już V wydanie antologii, w nowej okładce, bez Wędrowycza, za to ze znakiem firmowym Pilipiuka w postaci niepowtarzalnego humoru i zdumiewających pomysłów. Czternaście historii, z których wieje grozą i mrocznym nastrojem. Odliczmy więc 2586 kroków... I krok: To jedna z najlepszych polskich antologii. Bardzo dobrze, lekko napisana, pełna świetnych pomysłów, ciekawa i świeża. Obowiązkowa rzecz na każdej półce. (Tomasz Kleta, Avatarae) II krok: 14 opowiadań zebranych w 1 książce to 13 różnych bohaterów, 14 niesamowitych historii, 14świetnych pomysłów i kilka godzin ciekawej lektury. (Piotr 'Szarik' Iwanicki, Playback) III krok: Najlepsze ze zbioru - tytułowe 2586 kroków i Wieczorne dzwony — to najdojrzalsze i najlepiej dopracowane opowiadania grozy, urzekające mrocznym nastrojem, bazującym na lęku przed chorobą, godne porównań do klimatów twórczości E. A. Poe. (Małgorzata Koczańska, Fahrenheit) Dalej liczcie już sami..."
@@ -299,16 +299,16 @@ zakuty = %Book{
 
 percepcja = %Book{
   title: "Percepcja",
-  cover_url: "https://storage.googleapis.com/images.bookmanager.pro/book/cover/percepcja.jpg",
-  thumbnail_url: "https://storage.googleapis.com/images.bookmanager.pro/book/resized/percepcja.jpg",
+  cover_url: "https://images.bookmanager.pro/book/cover/percepcja.jpg",
+  thumbnail_url: "https://images.bookmanager.pro/book/resized/percepcja.jpg",
   isbn: "9788375747744",
   description: "Miroslav Żamboch i jego złe światy już niemal dekadę zwalają z nóg czytelników, których z każdą książką przybywa.\n\nTym razem Pragę zalewa fala wampirów, łatwych kobiet, motocykli, azjatyckich mieczy i morze czeskiej krwi. Zawrotne tempo akcji. Nawet zwykła bójka nagle zmienia się w regularną wojnę klanów. Nie ma miejsca na żarty, nie ma chwili na oddech.\n\nZłapałem go za kark i przycisnąłem do siebie. Stłumionym trzaskom wystrzałów towarzyszyły błyski ognia z otworu wentylacyjnego nad barem. W rytm tych wystrzałów drgała moja żywa tarcza. Przestała dopiero po ustaniu ognia\n\nWyrwałem zza pasa nóż do rzucania i cisnąłem go w otwór, z którego padły strzały. Chrapliwy jęk przekonał mnie, że rzut był celny."
 }
 
 klan = %Book{
   title: "W słuzbię klanu",
-  cover_url: "https://storage.googleapis.com/images.bookmanager.pro/book/cover/w-sluzbie-klanu.jpg",
-  thumbnail_url: "https://storage.googleapis.com/images.bookmanager.pro/book/resized/w-sluzbie-klanu.jpg",
+  cover_url: "https://images.bookmanager.pro/book/cover/w-sluzbie-klanu.jpg",
+  thumbnail_url: "https://images.bookmanager.pro/book/resized/w-sluzbie-klanu.jpg",
   isbn: "9788379640027",
   description: "Brutalny świat zajadłej wojny klanów. Wszystko co najlepsze z Żambocha.\n\nHerbert Ducatti wydobywa aktywne drogie kamienie dla klanu czarodziejów w Górach Północnych. Nie jest łatwo, bo skoncentrowana tam magia w przeciągu kilku godzin potrafi wypalić mózg każdego zwyczajnego człowieka. Na dużej głębokości wystarczy do tego kilka sekund. W Głębinie mogą przeżyć jedynie czarodzieje.\n\nKamieni pożądają wszystkie klany. A o to, czego chcą wszyscy, zazwyczaj toczy się krwawa walka.\n\nHerbert Ducatti chce tylko przeżyć… Chciał… przynajmniej na początku."
 }
@@ -340,8 +340,8 @@ wstega = %Book{
 
 wojna = %Book{
   title: "Wojna",
-  cover_url: "https://storage.googleapis.com/images.bookmanager.pro/cover/resized/wojna.jpg",
-  thumbnail_url: "https://storage.googleapis.com/images.bookmanager.pro/book/resized/wojna.jpg",
+  cover_url: "https://images.bookmanager.pro/cover/resized/wojna.jpg",
+  thumbnail_url: "https://images.bookmanager.pro/book/resized/wojna.jpg",
   isbn: "9788379642373",
   description: "Już myśleli, że mają zwycięstwo w zasięgu ręki.\n\nWiedźmak dostał się do Zagubionego Miasta, a oni deptali mi po piętach. Tylko skąd mieli wiedzieć, że miasto jest tylko nieistotnym punktem przerzutowym, a szaman wybiera się o wiele, wiele dalej?\n\n„Dalej” – czyli dokąd w ogóle? Czy może być coś jeszcze bardziej tajemniczego, zakazanego i nieznanego, niż owiane legendami centrum Sektora?\n\nOkazuje się, że tak. Były żołnierz Garsteczka, zabójca i najemnik Czerwony Kruk oraz uwięziony w ciele mutanta Chemik już wkrótce też to zrozumieją.\n\nZrozumieją – ale nie pojmą\n\nZrozumieją – ale nie pojmą"
 }
@@ -371,16 +371,16 @@ cieplo = %Book{
 
 cytadela = %Book{
   title: "Lodowa cytedela",
-  cover_url: "https://storage.googleapis.com/images.bookmanager.pro/book/cover/lodowa-cytadela.jpg",
-  thumbnail_url: "https://storage.googleapis.com/images.bookmanager.pro/book/resized/lodowa-cytadela.jpg",
+  cover_url: "https://images.bookmanager.pro/book/cover/lodowa-cytadela.jpg",
+  thumbnail_url: "https://images.bookmanager.pro/book/resized/lodowa-cytadela.jpg",
   isbn: "9788379640935",
   description: "Przygranicze to parę miast kilkadziesiąt lat temu wyrwanych z naszego świata i przeniesionych do krainy wiecznego mrozu. Dziwne miejsce, w którym przez większą część roku panują chłody i wieją lodowate wiatry, a ludzie nabywają magicznych zdolności, co czyni ich bardziej niebezpiecznymi od uzbrojonych po zęby bojowników.\n\nLecz człowiek umie przystosować się do każdych warunków, więc Jewgienij Apostoł już dawno przestał żałować, że trafił do Fortu - dawnego prowincjonalnego miasteczka, które stało się centrum cywilizacji na tej pokrytej śniegiem ziemi. I nawet kiedy przyszło wziąć nogi za pas, aby ratować skórę przed najemnymi zabójcami, przede wszystkim pomyślał o tym, jak nie zmarnować szansy na życiowy interes."
 }
 
 sopel = %Book{
   title: "Sopel",
-  cover_url: "https://storage.googleapis.com/images.bookmanager.pro/book/cover/sopel.jpg",
-  thumbnail_url: "https://storage.googleapis.com/images.bookmanager.pro/book/resized/sopel.jpg",
+  cover_url: "https://images.bookmanager.pro/book/cover/sopel.jpg",
+  thumbnail_url: "https://images.bookmanager.pro/book/resized/sopel.jpg",
   isbn: "9788379642267",
   description: "\n\nW świat Przygranicza trafiasz przypadkiem. Z woli losu. Wysiadasz z wagonu, by na postoju napić się piwa. Chwilę potem nie ma ani stacji, ani pociągu, ani torów, ani dworcowej knajpy, z której właśnie wyszedłeś.\n\nTylko mróz, śnieg, zamieć. I konieczność toczenia ciągłych walk. Z ludźmi i innymi bestiami.\n\nŚwiatem Przygranicza rządzi zasada „wszyscy przeciwko wszystkim”.\n\nSrebro i artefakty warte są tu nieporównanie więcej niż ludzkie życie. Miłosierdzie czy przyjaźń to tylko puste słowa. Co drugi jest bandytą. Sroga zima zaczyna się już w sierpniu. Zamarza serce. Czasem palec, i to – niestety – zanim pociągniesz za spust."
 }
@@ -404,8 +404,8 @@ raduchowska = Repo.insert!(%Author{
 
 szamanka = %Book{
   title: "Szamanka od umarlaków",
-  cover_url: "https://storage.googleapis.com/images.karolkozakowski.io/cover/szamanka-od-umarlakow.jpg",
-  thumbnail_url: "https://storage.googleapis.com/images.karolkozakowski.io/resized/szamanka-od-umarlakow.jpg",
+  cover_url: "https://images.bookmanager.pro/book/cover/szamanka-od-umarlakow.jpg",
+  thumbnail_url: "https://images.bookmanager.pro/book/resized/szamanka-od-umarlakow.jpg",
   isbn: "9788328045231",
   description: "Przygotujcie się na solidną dawkę znakomitego humoru, oto nowe wydanie kultowej powieści fantasy Martyny Raduchowskiej!\n\nKto by pomyślał, że potomkini wielkiego rodu czarodziejów, wróżbitów i telepatów zbuntuje się wobec rodzinnej tradycji… Ida Brzezińska ma osiemnaście lat i uważa magię za stek bzdur. Jak sama twierdzi, taka z niej czarownica, jak z koziego zadka waltornia. Jedyne, o czym Ida marzy, to spokojne życie młodej dziewczyny: wymarzone studia psychologiczne na Uniwersytecie Wrocławskim, mieszkanie w akademiku, poznawanie świata… Niestety przeszkadzają jej w tym pojawiające się ni stąd ni zowąd trupy. Widzenie zmarłych i przewidywanie śmierci ludzi żyjących to magiczny dar, długo poszukiwany przez rodziców Idy. Nie jest łatwo być medium… a dodatkowo Ida ma prawdziwego Pecha!"
 }
@@ -433,7 +433,7 @@ moherfucker = %Book{
 fartu_brak = %Book{
   title: "Raptowny fartu brak",
   cover_url: "https://storage.googleapis.com/images.bookmanager.pro/book/cover/raptowny-fartu-brak.jpg",
-  thumbnail_url: "https://storage.googleapis.com/images.bookmanager.pro/book/resized/raptowny-fartu-brak.jpg",
+  thumbnail_url: "https://images.bookmanager.pro/book/resized/raptowny-fartu-brak.jpg",
   isbn: "9788375740233",
   description: "Fartu brak? Czarta znak!\n\nBywa, że przeznaczenie, na autostradzie losu rozbija się o roboty drogowe. Albo Stwórca rzuca monetą, a ta, zawisa w powietrzu i wszystko zaczyna się pieprzyć...Tobie. Nie Stwórcy. I o tym są te opowiadania. Przypominają Kodeks Drogowy obowiązujacy w stanach obniżonego współczynnika szczęścia:\n\n§ 1. Zabrania się wyprzedzania, zawracania lub rozglądania w potoku pieszych. Zbieranie pamiątek po stratowanych grozi śmiercią lub kalectwem i utratą ubezpieczenia!\n\n§ 2. Przed rozpoczęciem ekspedycji skontroluj stan techniczny pokładowego mucha. Ze względu na możliwość wystąpienia pecha nie zaleca się przyjmowania na pokład samic żadnego gatunku.\n\n§ 3. Jeżeli Silnik twierdzi, że jesteś jego paliwem, zachowaj ostrożność. Odsuń się i łagodnie przemawiaj.\n\n§ 4. Stawianie ŻONY do pionu lub wystawianie na deszcz bez uprzedniej kontroli szczelności, grozi trwałym kalectwem i utratą gwarancji.\n\n§ 5. Po przeczytaniu - instrukcji nie zjadać."
 }
@@ -441,7 +441,7 @@ fartu_brak = %Book{
 wlos_piwa = %Book{
   title: "O włos od piwa",
   cover_url: "https://storage.googleapis.com/images.bookmanager.pro/book/cover/o-wlos-od-piwa.jpg",
-  thumbnail_url: "https://storage.googleapis.com/images.bookmanager.pro/book/resized/o-wlos-od-piwa.jpg",
+  thumbnail_url: "https://images.bookmanager.pro/book/resized/o-wlos-od-piwa.jpg",
   isbn: "8389011743",
   description: "Eugeniusz Dębski, mistrz polskiej fantastyki, powraca ze wzbogaconym zbiorem najlepszych opowieści o przygodach dwóch wiernych towarzyszy, Cadrona i Hondelyka.\n\nW każdej historii jako nieodłączny element pojawia się także znany i lubiany złocisty trunek, przy którym przyjaciele rozprawiają o kolejnych niesamowitych wyprawach i który bywa również przyczyną ich problemów. Hondelyk i Cadron jak magnes przyciągają do siebie przygody lub, jak kto woli, to przygody przyciągają ich. Przewrotny los wciąż wysyła ich w kolejne podróże do niezwykłych, nierealnych światów, w których przeciwnikiem może być prymitywny, dziki wojownik, skrzydlaty stwór, a czasem piękna i równie niebezpieczna kobieta. Lecz Cadrona i Hondelyka nie jest łatwo pokonać, bo czyż można pokonać kogoś, kto zmienia skórę jak kameleon, a raczej... Xameleon?"
 }
@@ -460,14 +460,14 @@ Repo.insert!(fartu_brak_book)
 hannu = Repo.insert!(%Author{
   name: "Hannu",
   surname: "Rajaniemi",
-  avatar_url: "https://storage.googleapis.com/images.bookmanager.pro/author/Hannu_Rajaniemi.jpg",
+  avatar_url: "https://images.bookmanager.pro/author/Hannu_Rajaniemi.jpg",
   description: " fiński autor fantastyki, piszący po angielsku i fińsku. Mieszka w Oakland w Kalifornii. Założył komercyjną organizacje ThinkTank Maths. W Polsce w 2018 roku została wydana jego trylogia Jean le Flambeur, w tym jego nagradzana powieść Kwantowy złodziej.\n\nUrodził się w Ylivieska w Finlandii w 1978 roku. Uzyskał licencjat z matematyki na Uniwersytecie w Oulu, tytuł magistra nauk matematycznych na University of Cambridge oraz doktorat z fizyki matematycznej na Uniwersytecie Edynburskim. Przed rozpoczęciem studiów doktoranckich ukończył krajową służbę jako naukowiec dla Finnish Defence Forces.\n\nW trakcie swoich studiów doktoranckich dołączył do Writers' Bloc, grupy pisarzy w Edynburgu, do której należy także Charlie Stross."
 })
 
 zlodziej = %Book{
   title: "Kwantowy złodziej",
-  cover_url: "https://storage.googleapis.com/images.bookmanager.pro/book/cover/kwantowy-zlodziej.jpg",
-  thumbnail_url: "https://storage.googleapis.com/images.bookmanager.pro/book/resized/kwantowy-zlodziej.jpg",
+  cover_url: "https://images.bookmanager.pro/book/cover/kwantowy-zlodziej.jpg",
+  thumbnail_url: "https://images.bookmanager.pro/book/resized/kwantowy-zlodziej.jpg",
   isbn: "9788374808781",
   description: "Jean le Flambeur siedzi w więzieniu. I powinien w nim zostać. Oszust, łgarz, niezrównany złodziej, o którego wyczynach krążą legendy. Jego pochodzenie owiewa mgła tajemnicy, za to o jego niesławnych dokonaniach – takich jak wykradnięcie ziemskich antyków z Marsa czy włamanie do rozległego zeusmózgu i kradzież jego myśli – słyszeli wszyscy. Popełnił tylko jeden, jedyny błąd; nie udał mu się jeden skok. I teraz, jeśli chce odzyskać wolność, będzie musiał spróbować ponownie… Powieść Rajaniemiego to oszałamiająca hard SF – opowieść złodziejska, której motorem napędowym są jak najbardziej ludzkie motywy: zdrada, zemsta, zazdrość. Mocne oparcie w nauce, oryginalne pomysły i świetnie nakreślone postaci – oto debiut wyjątkowy pod każdym względem."
 }
@@ -480,22 +480,22 @@ Repo.insert!(zlodziej_book)
 noczkin = Repo.insert!(%Author{
   name: "Wiktor",
   surname: "Noczkin",
-  avatar_url: "https://storage.googleapis.com/images.bookmanager.pro/author/noczkin.jpg",
+  avatar_url: "https://images.bookmanager.pro/author/noczkin.jpg",
   description: "Z niejednego pieca chleb jadł\n\nUrodził się w 1966 roku w Charkowie (wówczas ZSRR). Spędził tam dzieciństwo i młodość marząc o locie na nieznaną planetę lub choćby nadaniu nazwy rzece. Przez lata kolekcjonował figurki żołnierzyków, a nawet sam je produkował i sprzedawał. Życie zawodowe rozpoczynał jako inżynier i projektant dźwigów towarowych rozsyłanych na cały świat.\n\nPrzygodę z pisaniem rozpoczął dopiero jako trzydziestolatek w latach dziewięćdziesiątych, po zmianie ustroju i upadku ZSRR. Wymyślił jedną historię, zaczął zapisywać następne i wyszła z tego powieść, potem powstawały kolejne.\n\nW 2001 roku pisarz został zmuszony do wyjazdu za granicę. Dopiero w Niemczech opublikował swoje teksty w magazynach rosyjskojęzycznych i podpisał pierwszy kontrakt z rosyjskim wydawcą książek. W trakcie ostatniej dekady Wiktor Noczkin wydał ponad trzydzieści powieści i stał się jednym z najpopularniejszych autorów rosyjskojęzycznych.\n\nLiteratura powiązana z grą komputerową to znak naszych czasów – uważa Noczkin. W serię S.T.A.L.K.E.R. wciągnął go Andriej Lewicki, który był jednym z pionierów serii książek osadzonych w uniwersum gry. Za jego namową, Noczkin zagrał w „Cień Czarnobyla” i atmosfera gry go porwała…"
 })
 
 plama = %Book{
   title: "Slepa plama",
-  cover_url: "https://storage.googleapis.com/images.bookmanager.pro/book/cover/slepa-plama.jpg",
-  thumbnail_url: "https://storage.googleapis.com/images.bookmanager.pro/book/resized/slepa-plama.jpg",
+  cover_url: "https://images.bookmanager.pro/book/cover/slepa-plama.jpg",
+  thumbnail_url: "https://images.bookmanager.pro/book/resized/slepa-plama.jpg",
   isbn: "9788375749885",
   description: "Pierwsza rosyjskojęzyczna powieść z uniwersum S.T.A.L.K.E.R. przetłumaczona na język polski.\n\nTajemniczy sektor Zony\n\nŚlepy jest chyba jednym z najbardziej pechowych stalkerów. A jednak to właśnie jemu zaproponowano, by został przewodnikiem wybitnego uczonego Dietricha van de Meera.\n\nDietrich nie płaci nazbyt hojnie i porywa się na niemalże samobójcze ryzyko – ale Ślepy, szczerze mówiąc, nie za bardzo ma w czym przebierać.\n\nWkrótce tej dość dziwnej drużynie przychodzi się zetknąć z cokolwiek nietypowym problemem – zbadaniem sprawy tajemniczych zniknięć stalkerów, wciąż ginących w jednym i tym samym sektorze Zony. Co takiego im się przydarzyło? Jaki spotkał ich los? Tego nie wie nikt.\n\nJedynym tropem Ślepego i Dietricha są pijackie opowieści byłego stalkera, przysięgającego na wszystkie świętości, że to właśnie tam znajdują się szczególnie bogate pola artefaktów…"
 }
 
 szerep = %Book{
   title: "Czerep mutanta",
-  cover_url: "https://storage.googleapis.com/images.bookmanager.pro/book/cover/szerep-mutanta.jpg",
-  thumbnail_url: "https://storage.googleapis.com/images.bookmanager.pro/book/resized/szerep-mutanta.jpg",
+  cover_url: "https://images.bookmanager.pro/book/cover/szerep-mutanta.jpg",
+  thumbnail_url: "https://images.bookmanager.pro/book/resized/szerep-mutanta.jpg",
   isbn: "9788375749434",
   description: "Nowe przygody stalkera Ślepego\n\nZona skrywa niejedną tajemnicę – czasami nie wystarczy do jej odkrycia intuicja czy logika, a wtedy przydaje się ślepy traf. Czego jak czego, ale tego stalkerowi Ślepemu jego Fortuna nie szczędzi.\n\nPróbujący odpocząć u rodziny na Dużej Ziemi stalker trafia wbrew swej woli w sam środek szeroko zakrojonej operacji, realizowanej rękami najemników, ale stworzonej przez samych Gospodarzy Zony. Ukrywający się przed pogonią Ślepy zmienia tożsamość i chowa się w Głębokiej Zonie. Tam będzie musiał rozwikłać tajemnicę przestępstwa w obozie stalkerów, lawirować pomiędzy ścierającymi się frakcjami, znaleźć zabójcę, odnaleźć nietypowy artefakt, spotkać się z Chemikiem i Garsteczką.\n\nDziwne rzeczy dzieją się w Zonie, ścierają się ukryte siły, a Ślepy i jego towarzysze nagle okazują się być na pierwszej linii tej cichej wojny."
 }
@@ -510,16 +510,16 @@ lancuch = %Book{
 
 lowca_z_lasu = %Book{
   title: "Łowca z lasu",
-  cover_url: "https://storage.googleapis.com/images.bookmanager.pro/book/cover/lowca-z-lasu.jpg",
-  thumbnail_url: "https://storage.googleapis.com/images.bookmanager.pro/book/resized/lowca-z-lasu.jpg",
+  cover_url: "https://images.bookmanager.pro/book/cover/lowca-z-lasu.jpg",
+  thumbnail_url: "https://images.bookmanager.pro/book/resized/lowca-z-lasu.jpg",
   isbn: "9788379640249",
   description: "Wejdź do Survarium i zmierz się z krwiożerczą Matką Naturą\n\nXXI wiek. Ziemia powstała przeciwko człowiekowi, aby go zniszczyć.\n\nNa planecie pojawia się przerażająca bio-anomalia - Las pełen zmutowanych roślin i zwierząt. Nieliczni dają radę przeżyć w nowym świecie pełnym agresywnych mutantów i odmienionej przyrody. Ludzie formują bandy, klany i zgrupowania, walczące o resztki pozostałe po upadku cywilizacji. Łowca, Stas Łogin, balansując pomiędzy życiem a śmiercią w pojedynkę stawia czoła bandzie półdzikich koczowników, próbując rozwikłać zagadkę złowieszczego Poligonu Śmierci.\n\nNawet jeśli wszyscy są przeciwko tobie - nie znaczy to, że nie masz racji."
 }
 
 wektor = %Book{
   title: "Wektor zagrozenia",
-  cover_url: "https://storage.googleapis.com/images.bookmanager.pro/book/cover/wektor-zagrozenia.jpg",
-  thumbnail_url: "https://storage.googleapis.com/images.bookmanager.pro/book/resized/wektor-zagrozenia.jpg",
+  cover_url: "https://images.bookmanager.pro/book/cover/wektor-zagrozenia.jpg",
+  thumbnail_url: "https://images.bookmanager.pro/book/resized/wektor-zagrozenia.jpg",
   isbn: "9788379640539",
   description: "Survarium - duchowy spadkobierca S.T.A.L.K.E.R.a\n\nŚwiat przyszłości, w którym ziemia powstała przeciwko człowiekowi, aby go zniszczyć.\n\nNa planecie pojawia się przerażająca bio-anomalia – Las pełen zmutowanych roślin i zwierząt. Nieliczni dają radę przeżyć w nowym świecie pełnym agresywnych mutantów i odmienionej przyrody. Ludzie formują bandy, klany i zgrupowania, walczące o resztki pozostałe po upadku cywilizacji.\n\nWłóczęga Aleks wbrew swej woli wplątuje się w poszukiwanie sekretów porzuconych laboratoriów naukowych. Naprzeciw siebie stają oddziały Czarnego Rynku oraz Armii Odrodzenia, chcące posiąść na własność odpowiedź na zagadkę z przeszłości..\n\nKrwiożercza siła Matki Natury kontra natura człowieka"
 }
@@ -541,14 +541,14 @@ Repo.insert!(wektor_book)
 greaney = Repo.insert!(%Author{
   name: "Mark",
   surname: "Greaney",
-  avatar_url: "https://storage.googleapis.com/images.bookmanager.pro/author/greaney.jpg",
+  avatar_url: "https://images.bookmanager.pro/author/greaney.jpg",
   description: "Mark Greaney’s debut international thriller, THE GRAY MAN, was released by Jove Books in 2009. It became a national bestseller, and was nominated for a Barry Award in the Best Thriller category. A feature film adaptation of THE GRAY MAN is in development by New Regency Pictures. The screenplay for The Gray Man, written by Adam Cozad, was placed on the Black List of 2010 of the best unproduced screenplays in Hollywood. James Gray, director of We own the Night, and Two Lovers, will direct, and Brad Pitt has agreed to star as burned ex CIA paramilitary officer Court Gentry.\n\nMark’s next thriller, ON TARGET, was released in September 2010 by Jove, and was nominated for a Barry Award in the Best Thriller category."
 })
 
 zwierzchnik = %Book{
   title: "Zwierzchnik",
-  cover_url: "https://storage.googleapis.com/images.bookmanager.pro/book/cover/zwierzchnik.jpg",
-  thumbnail_url: "https://storage.googleapis.com/images.bookmanager.pro/book/resized/zwierzchnik.jpg",
+  cover_url: "https://images.bookmanager.pro/book/cover/zwierzchnik.jpg",
+  thumbnail_url: "https://images.bookmanager.pro/book/resized/zwierzchnik.jpg",
   isbn: "9788328009981",
   description: "Dziewiąta książka z cyklu o Jacku Ryanie, byłym agencie CIA, prezydencie USA, opublikowana już po śmierci autora.\n\nTajemnicza historia z czasów zimnej wojny i współczesne wydarzenia: Rosja atakuje Ukrainę, świat staje na krawędzi wielkiego konfliktu. Okoliczności szybkiego i niespodziewanego dojścia do władzy nowego prezydenta Rosji owiane są tajemnicą. Terror i zastraszanie to metody powstrzymywania wrogów przed poznaniem prawdy. Okazuje się, że jest jedna osoba, która może znać mroczny sekret rosyjskiego magnata – obecny prezydent Stanów Zjednoczonych, były agent CIA Jack Ryan.\n\nNumer 1 na liście bestsellerów „New York Timesa”!"
 }
@@ -563,14 +563,14 @@ Repo.insert!(zwierzchnik_book)
   doobs = Repo.insert!(%Author{
     name: "Michael",
     surname: "Dobbs",
-    avatar_url: "https://storage.googleapis.com/images.bookmanager.pro/author/dobbs.jpg",
+    avatar_url: "http://images.bookmanager.pro/author/dobbs.jpg",
     description: "Członek brytyjskiej Partii Konserwatywnej i pisarz."
   })
 
   house = %Book{
     title: "House of cards",
-    cover_url: "https://storage.googleapis.com/images.bookmanager.pro/book/cover/house-of-cards.jpg",
-    thumbnail_url: "https://storage.googleapis.com/images.bookmanager.pro/book/resized/house-of-cards.jpg",
+    cover_url: "https://images.bookmanager.pro/book/cover/house-of-cards.jpg",
+    thumbnail_url: "https://images.bookmanager.pro/book/resized/house-of-cards.jpg",
     isbn: "9788324026555",
     description: "House of Cards – kto rozdaje karty na najwyższych szczeblach władzy?\n\nOpowieść-fenomen, która zachwyciła miliony widzów i czytelników na całym świecie.\n\nCzłowieka motywuje nie szacunek, lecz strach. To na nim buduje się imperia i za jego sprawą wszczyna rewolucje. W tym tkwi sekret wielkich ludzi. Kiedy ktoś się ciebie boi, zniszczysz go, zmiażdżysz, a w efekcie on zawsze obdarzy cię szacunkiem. Prymitywny strach jest upajający, wszechogarniający, wyzwalający. Zawsze silniejszy od szacunku. Zawsze.\n\nMichael Dobbs wie o czym pisze. Sam wiele lat był politykiem, który z bliska obserwował, jak działają mechanizmy władzy. Swoje doświadczenia przekuł w fascynującą opowieść o korupcji, manipulacji i ambicji, która każe człowiekowi iść po trupach do celu.\n\nJak daleko można się posunąć, by osiągnąć upragniony cel?\n\nOd tej książki rozpoczęła się historia jednego z najlepszych seriali XXI wieku."
   }
