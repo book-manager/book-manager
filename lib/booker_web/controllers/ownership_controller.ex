@@ -10,7 +10,7 @@ defmodule BookerWeb.OwnershipController do
   action_fallback BookerWeb.FallbackController
 
   def index(conn, _params) do
-    ownership = Author.list_ownership()
+    ownership = Authors.list_ownership()
     render(conn, "index.json", ownership: ownership)
   end
 
@@ -24,7 +24,7 @@ defmodule BookerWeb.OwnershipController do
       |> Changeset.put_assoc(:authors, authors)
       |> Repo.update!
 
-    render conn, "show.json-api", data: %{owned: true}
+      render(conn, "show.json", %{owned: true})
   end
 
   @doc """
@@ -38,14 +38,14 @@ defmodule BookerWeb.OwnershipController do
 
     case ownership do
       %Ownership{} ->
-        render conn, "show.json-api", data: %{owned: true}
+        render(conn, "show.json", %{owned: true})
       nil ->
-        render conn, "show.json-api", data: %{owned: false}
+        render(conn, "show.json", %{owned: false})
     end
   end
 
   def update(conn, %{"id" => id, "ownership" => ownership_params}) do
-    ownership = Author.get_ownership!(id)
+    ownership = Authors.get_ownership!(id)
 
     with {:ok, %Ownership{} = ownership} <- Authors.update_ownership(ownership, ownership_params) do
       render(conn, "show.json", ownership: ownership)
@@ -53,7 +53,7 @@ defmodule BookerWeb.OwnershipController do
   end
 
   def delete(conn, %{"id" => id}) do
-    ownership = Author.get_ownership!(id)
+    ownership = Authors.get_ownership!(id)
     with {:ok, %Ownership{}} <- Authors.delete_ownership(ownership) do
       send_resp(conn, :no_content, "")
     end

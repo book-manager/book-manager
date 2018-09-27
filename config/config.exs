@@ -7,7 +7,9 @@ use Mix.Config
 
 # General application configuration
 config :booker,
-  ecto_repos: [Booker.Repo]
+  ecto_repos: [Booker.Repo],
+  http_adapter: HTTPoison,
+  images_service: "http://localhost:3333"
 
 # Configures the endpoint
 config :booker, BookerWeb.Endpoint,
@@ -32,6 +34,7 @@ config :phoenix, :format_encoders,
 config :mime, :types, %{
   "application/vnd.api+json" => ["json-api"]
 }
+
 config :ja_serializer,
   key_format: :underscored
 

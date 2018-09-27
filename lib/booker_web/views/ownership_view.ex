@@ -1,9 +1,7 @@
 defmodule BookerWeb.OwnershipView do
   use BookerWeb, :view
-  use JaSerializer.PhoenixView
 
-  attributes [
-    :owned
-  ]
-
+  def render("show.json", %{owned: owned}) do
+    %{owned: owned}
+  end
 end
