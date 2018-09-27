@@ -8,6 +8,8 @@ defmodule BookerWeb.BookController do
 
   alias Booker.Repo
 
+  alias Services.Images
+
   import Ecto.Query
 
   action_fallback(BookerWeb.FallbackController)
@@ -39,49 +41,53 @@ defmodule BookerWeb.BookController do
     current_user_id = conn.assigns.current_user.id
     isbn = book_params["isbn"]
 
+    cover_response = Images.upload_book_cover(book_params["imgData"], book_params["imagesName"])
+
+    params =
+      Map.drop(book_params, ["imageName", "imgData"])
+      |> Map.put("cover_url", cover_response["object_url"])
+      |> Map.put("thumbnail_url", cover_response["cover_url"])
+
     # Upload cover photo
-    case HTTPoison.post(
-           "http://localhost:4567/book",
-           Poison.encode!(%{image: book_params["imgData"], name: book_params["imageName"]})
-         ) do
-      {:ok, %HTTPoison.Response{status_code: 200, body: body}} ->
-        cover_response = Poison.decode!(body)
+    # case HTTPoison.post("http://localhost:4567/book", Poison.encode!(%{image: book_params["imgData"], name: book_params["imageName"]})) do
+    #   {:ok, %HTTPoison.Response{status_code: 200, body: body}} ->
+    #     cover_response = Poison.decode!(body)
 
-        params =
-          Map.drop(book_params, ["imageName", "imgData"])
-          |> Map.put("cover_url", cover_response["object_url"])
-          |> Map.put("thumbnail_url", cover_response["cover_url"])
+    #     params =
+    #       Map.drop(book_params, ["imageName", "imgData"])
+    #       |> Map.put("cover_url", cover_response["object_url"])
+    #       |> Map.put("thumbnail_url", cover_response["cover_url"])
 
-        # check if we alrady have that book
-        book = Repo.get_by(Book, isbn: isbn)
+    #     # check if we alrady have that book
+    #     book = Repo.get_by(Book, isbn: isbn)
 
-        case book do
-          %Book{} ->
-            Logger.debug("We already have book #{isbn} in db")
+    #     case book do
+    #       %Book{} ->
+    #         Logger.debug("We already have book #{isbn} in db")
 
-            with {:ok, %BookOwnership{} = book_ownership} <-
-                   Books.create_book_ownership(%{user_id: current_user_id, book_id: book.id}) do
-              conn |> put_status(:created) |> render("show.json", book: book)
-            end
+    #         with {:ok, %BookOwnership{} = book_ownership} <-
+    #                Books.create_book_ownership(%{user_id: current_user_id, book_id: book.id}) do
+    #           conn |> put_status(:created) |> render("show.json", book: book)
+    #         end
 
-          nil ->
-            with {:ok, %Book{} = book} <- Books.create_book(params) do
-              with {:ok, %BookOwnership{} = book_ownership} <-
-                     Books.create_book_ownership(%{user_id: current_user_id, book_id: book.id}) do
-                conn |> put_status(:created) |> render("show.json", book: book)
-              end
-            end
-        end
+    #       nil ->
+    #         with {:ok, %Book{} = book} <- Books.create_book(params) do
+    #           with {:ok, %BookOwnership{} = book_ownership} <-
+    #                  Books.create_book_ownership(%{user_id: current_user_id, book_id: book.id}) do
+    #             conn |> put_status(:created) |> render("show.json", book: book)
+    #           end
+    #         end
+    #     end
 
-      {:ok, %HTTPoison.Response{status_code: 404}} ->
-        {:error, 404}
-    end
+    #   {:ok, %HTTPoison.Response{status_code: 404}} ->
+    #     {:error, 404}
+    # end
   end
 
   def show(conn, %{"id" => id}) do
     book = Books.get_book!(id) |> Repo.preload([:author])
 
-    render conn, "show.json-api", data: book, opts: [include: "author"]
+    render(conn, "book.json", book: book)
   end
 
   @doc """

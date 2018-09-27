@@ -49,7 +49,8 @@ defmodule Booker.Mixfile do
       {:httpoison, "~> 1.1"},
       {:poison, "~> 3.1"},
       {:ja_serializer, "~> 0.13.0"},
-      {:excoveralls, "~> 0.10", only: :test}
+      {:excoveralls, "~> 0.10", only: :test},
+      {:mox, "~> 0.4"}
     ]
   end
 
